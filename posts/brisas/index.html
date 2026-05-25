@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>brisas · gustavo alves</title>
+  <meta name="description" content="percepção solta, antes de virar tese.">
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: color-mix(in srgb, var(--cobre-claro) 10%, var(--pergaminho));
+      color: var(--tinta);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lt-wrap { max-width: 1200px; margin: 0 auto; padding: 0 64px; }
+    @media (max-width: 720px) { .lt-wrap { padding: 0 28px; } }
+
+    .lt-topbar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 30%, transparent);
+    }
+    .lt-wm {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--tinta);
+      display: inline-flex; align-items: baseline; gap: 14px;
+      text-decoration: none;
+    }
+    .lt-wm .dot { color: var(--cobre-profundo); }
+    .lt-wm-tag {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      padding-left: 14px;
+      border-left: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 35%, transparent);
+    }
+    .lt-links { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 13px; }
+    .lt-links a {
+      color: var(--grafite); text-decoration: none; letter-spacing: 0.3px;
+      transition: color 120ms ease;
+    }
+    .lt-links a:hover { color: var(--cobre-profundo); }
+    .lt-links a.is-current { color: var(--cobre-profundo); border-bottom: 1px solid var(--cobre-profundo); padding-bottom: 2px; }
+    .lt-back { color: var(--cobre-profundo) !important; }
+
+    .lt-header {
+      padding: 96px 0 64px;
+      display: grid;
+      grid-template-columns: 96px 1fr auto;
+      gap: 32px;
+      align-items: end;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 25%, transparent);
+    }
+    .lt-num {
+      font-family: var(--font-mono); font-size: 14px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px;
+    }
+    .lt-num strong {
+      display: block; font-family: var(--font-display); font-weight: 700;
+      font-size: 56px; color: var(--tinta); letter-spacing: -0.03em;
+      line-height: 1; margin-top: 8px;
+    }
+    .lt-kicker {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .lt-title {
+      font-family: 'Bricolage Grotesque', var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-variation-settings: "wght" 460;
+      font-size: clamp(72px, 11vw, 144px);
+      line-height: 0.9; letter-spacing: -0.035em;
+      color: var(--cobre-profundo); margin: 0;
+      animation: brisas-breath-h 6s ease-in-out infinite;
+    }
+    @keyframes brisas-breath-h {
+      0%, 100% { font-variation-settings: "wght" 380; }
+      50%      { font-variation-settings: "wght" 620; }
+    }
+    .lt-sub {
+      font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.45; color: var(--grafite);
+      margin: 20px 0 0; max-width: 520px;
+    }
+    .lt-sub em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; }
+    .lt-count {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      text-align: right; align-self: end; padding-bottom: 8px;
+    }
+
+    /* empty state — brisa que ainda não veio */
+    .lt-empty {
+      padding: 96px 0;
+      max-width: 720px; margin: 0 auto; text-align: center;
+    }
+    .lt-empty-quote {
+      font-family: 'Bricolage Grotesque', var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-variation-settings: "wght" 460;
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.15; letter-spacing: -0.025em;
+      color: var(--cobre-profundo); margin: 0;
+      animation: brisas-breath-q 5s ease-in-out infinite;
+    }
+    @keyframes brisas-breath-q {
+      0%, 100% { font-variation-settings: "wght" 380; }
+      50%      { font-variation-settings: "wght" 560; }
+    }
+    .lt-empty-tail {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--grafite); letter-spacing: 0.4px;
+      margin: 40px 0 0;
+    }
+    .lt-empty-tail strong { color: var(--cobre-profundo); font-weight: 500; }
+
+    .lt-footer {
+      padding: 32px 0 48px;
+      border-top: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 25%, transparent);
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 720px) {
+      .lt-header { grid-template-columns: 1fr; gap: 20px; padding: 56px 0 32px; }
+      .lt-count { text-align: left; padding-bottom: 0; }
+      .lt-empty { padding: 56px 0; }
+      .lt-links { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lt-wrap">
+
+    <nav class="lt-topbar">
+      <a class="lt-wm" href="../../index.html">
+        <span>gustavo alves<span class="dot">.</span></span>
+        <span class="lt-wm-tag">{ caderno · brisas }</span>
+      </a>
+      <div class="lt-links">
+        <a href="../news/index.html">news</a>
+        <a href="../estudos/index.html">estudos</a>
+        <a href="../registro/index.html">registro</a>
+        <a class="is-current" href="#">brisas</a>
+        <a href="../image-video/index.html">image/video</a>
+        <a href="../../index.html" class="lt-back">← cadernos</a>
+      </div>
+    </nav>
+
+    <header class="lt-header">
+      <div class="lt-num">nº · caderno<strong>04</strong></div>
+      <div class="lt-title-block">
+        <div class="lt-kicker">{ percepção · 0 brisas }</div>
+        <h1 class="lt-title">brisas</h1>
+        <p class="lt-sub">percepção solta, <em class="kw">antes de virar tese</em>. observação que eu quis registrar antes de perder o frescor.</p>
+      </div>
+      <div class="lt-count">ainda nada</div>
+    </header>
+
+    <section class="lt-empty">
+      <p class="lt-empty-quote">primeira brisa em breve. <em class="kw">quando der na telha.</em></p>
+      <p class="lt-empty-tail">não tem programação. <strong>quando vier o sopro, registro aqui.</strong></p>
+    </section>
+
+    <footer class="lt-footer">
+      atualizado 25 mai 2026 · brisas · v0.0.1
+    </footer>
+
+  </div>
+</body>
+</html>

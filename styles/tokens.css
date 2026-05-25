@@ -1,0 +1,225 @@
+/* =========================================================================
+   Gustavo Alves — Design System v1.0
+   Tokens (cores + tipografia + espaçamento + componentes)
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700&display=swap');
+
+:root {
+  /* ---------- COR — paleta principal ---------- */
+  --tinta:           #1A1612;   /* fundo escuro, texto sobre claro */
+  --cobre:           #D88A4A;   /* marca, destaque, ação */
+  --cobre-profundo:  #8A4F22;   /* hover, secundário, autoridade */
+  --pergaminho:      #F4EFE6;   /* fundo claro, texto sobre escuro */
+  --grafite:         #5F574E;   /* texto secundário, divisórias */
+
+  /* ---------- COR — variações tonais ---------- */
+  --tinta-suave:     #2A241F;
+  --cobre-claro:     #E8A878;
+  --pergaminho-q:    #EAE3D5;
+
+  /* ---------- COR — semântico ---------- */
+  --bg:              var(--pergaminho);
+  --bg-elev:         var(--pergaminho-q);
+  --bg-inverse:      var(--tinta);
+  --fg:              var(--tinta);
+  --fg-muted:        var(--grafite);
+  --fg-inverse:      var(--pergaminho);
+  --accent:          var(--cobre);
+  --accent-deep:     var(--cobre-profundo);
+  --rule:            color-mix(in srgb, var(--grafite) 30%, transparent);
+
+  /* ---------- TIPOGRAFIA — famílias ---------- */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Space Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---------- TIPOGRAFIA — pesos ---------- */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* ---------- TIPOGRAFIA — escala ---------- */
+  --display-xl: 64px;
+  --display-lg: 48px;
+  --display-md: 36px;
+  --display-sm: 28px;
+  --body-lg:    18px;
+  --body-md:    16px;
+  --body-sm:    14px;
+  --mono-md:    14px;
+  --mono-sm:    12px;
+
+  /* ---------- ESPAÇAMENTO (4px base) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ---------- RAIOS ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* =========================================================================
+   ELEMENTOS SEMÂNTICOS
+   ========================================================================= */
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: 1.6;
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0;
+  text-wrap: balance;
+}
+h1 { font-size: var(--display-xl); }
+h2 { font-size: var(--display-lg); }
+h3 { font-size: var(--display-md); }
+h4 { font-size: var(--display-sm); font-weight: var(--weight-medium); }
+
+p {
+  font-size: var(--body-md);
+  line-height: 1.6;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Assinatura primária: itálico cobre em meio a sans-serif */
+.kw, em.kw, .ga-italic-accent {
+  font-style: italic;
+  color: var(--cobre);
+  font-weight: inherit;
+}
+/* No claro, o cobre vira cobre-profundo para passar contraste em texto */
+.on-light .kw, .on-light em.kw { color: var(--cobre-profundo); }
+
+/* Assinatura secundária: { palavra } em mono cobre */
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--mono-md);
+  color: var(--cobre);
+  font-weight: var(--weight-medium);
+}
+.on-light code, .on-light .mono { color: var(--cobre-profundo); }
+
+/* Citação editorial */
+blockquote, .ga-quote {
+  background: var(--pergaminho);
+  color: var(--tinta);
+  border-left: 3px solid var(--cobre);
+  border-radius: 0;
+  padding: var(--space-5) var(--space-5);
+  margin: 0;
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-size: var(--display-sm);
+  line-height: 1.3;
+  font-family: var(--font-display);
+}
+
+/* Link em texto */
+a {
+  color: var(--cobre-profundo);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: var(--weight-medium);
+}
+a:hover { color: var(--cobre); }
+
+/* Divisória */
+hr {
+  border: 0;
+  border-top: 0.5px solid var(--rule);
+  margin: var(--space-6) 0;
+}
+
+/* =========================================================================
+   COMPONENTES
+   ========================================================================= */
+
+.ga-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: var(--weight-medium);
+  font-size: var(--body-md);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  border: 0;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+  text-decoration: none;
+}
+.ga-btn--primary-dark   { background: var(--tinta); color: var(--pergaminho); }
+.ga-btn--primary-dark:hover  { background: var(--cobre-profundo); }
+.ga-btn--primary-light  { background: var(--pergaminho); color: var(--tinta); }
+.ga-btn--primary-light:hover { background: var(--pergaminho-q); }
+.ga-btn--secondary {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid var(--tinta);
+}
+.ga-btn--secondary:hover { background: color-mix(in srgb, var(--tinta) 10%, transparent); }
+.on-dark .ga-btn--secondary { color: var(--pergaminho); border-color: var(--pergaminho); }
+.on-dark .ga-btn--secondary:hover { background: color-mix(in srgb, var(--pergaminho) 10%, transparent); }
+
+.ga-card {
+  background: var(--pergaminho);
+  color: var(--tinta);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+}
+.ga-card--dark { background: var(--tinta); color: var(--pergaminho); }
+
+.ga-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--mono-sm);
+  font-weight: var(--weight-medium);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--cobre-profundo);
+  color: var(--pergaminho);
+  text-transform: lowercase;
+  letter-spacing: 0.5px;
+}
+.ga-tag--cobre { background: var(--cobre); color: var(--tinta); }
+.ga-tag--outline {
+  background: transparent;
+  color: var(--cobre-profundo);
+  box-shadow: inset 0 0 0 1px var(--cobre-profundo);
+}
+
+/* Assinatura de rodapé (— gustavo alves) */
+.ga-sig {
+  font-family: var(--font-mono);
+  font-size: var(--mono-sm);
+  color: var(--cobre-profundo);
+  letter-spacing: 0.5px;
+}
+.on-dark .ga-sig { color: var(--cobre); }
+
+/* Modos de superfície */
+.on-dark  { background: var(--tinta); color: var(--pergaminho); }
+.on-light { background: var(--pergaminho); color: var(--tinta); }

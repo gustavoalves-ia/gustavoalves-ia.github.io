@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>estudos · gustavo alves</title>
+  <meta name="description" content="loop fechado: leio, escrevo, ensino, refaço.">
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--pergaminho-q);
+      color: var(--tinta);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+    .lt-wrap { max-width: 1200px; margin: 0 auto; padding: 0 64px; }
+    @media (max-width: 720px) { .lt-wrap { padding: 0 28px; } }
+
+    .lt-topbar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-wm {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--tinta);
+      display: inline-flex; align-items: baseline; gap: 14px;
+      text-decoration: none;
+    }
+    .lt-wm .dot { color: var(--cobre-profundo); }
+    .lt-wm-tag {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      padding-left: 14px;
+      border-left: 0.5px solid color-mix(in srgb, var(--tinta) 25%, transparent);
+    }
+    .lt-links { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 13px; }
+    .lt-links a {
+      color: var(--grafite); text-decoration: none; letter-spacing: 0.3px;
+      transition: color 120ms ease;
+    }
+    .lt-links a:hover { color: var(--cobre-profundo); }
+    .lt-links a.is-current { color: var(--tinta); border-bottom: 1px solid var(--cobre-profundo); padding-bottom: 2px; }
+    .lt-back { color: var(--cobre-profundo) !important; }
+
+    .lt-header {
+      padding: 80px 0 56px;
+      display: grid;
+      grid-template-columns: 128px 1fr auto;
+      gap: 32px;
+      align-items: end;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-num {
+      font-family: var(--font-mono); font-size: 14px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px;
+    }
+    .lt-num strong {
+      display: block; font-family: var(--font-display); font-weight: 700;
+      font-size: 56px; color: var(--tinta); letter-spacing: -0.03em;
+      line-height: 1; margin-top: 8px;
+    }
+    .lt-kicker {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .lt-title {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.95; letter-spacing: -0.04em;
+      color: var(--tinta); margin: 0;
+      position: relative; display: inline-block;
+    }
+    /* canetão fixo no listing (não no hover — é o caderno inteiro) */
+    .lt-title::after {
+      content: ""; position: absolute; left: 0; bottom: 0.08em;
+      height: 0.22em; width: 100%;
+      background: color-mix(in srgb, var(--cobre) 50%, transparent);
+      z-index: -1;
+    }
+    .lt-roman {
+      font-style: italic; font-weight: 500;
+      color: var(--cobre-profundo); margin-right: 0.18em;
+      letter-spacing: -0.02em;
+      display: inline-block; min-width: 1.7em;
+    }
+    .lt-roman::before { content: "II."; display: inline-block; animation: estudos-loop 4.8s steps(1) infinite; }
+    @keyframes estudos-loop {
+      0%, 24%   { content: "I."; }
+      25%, 49%  { content: "II."; }
+      50%, 74%  { content: "III."; }
+      75%, 100% { content: "IV."; }
+    }
+    .lt-sub {
+      font-size: 18px; line-height: 1.5; color: var(--grafite);
+      margin: 18px 0 0; max-width: 540px;
+    }
+    .lt-sub em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; }
+    .lt-count {
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px; text-align: right; align-self: end; padding-bottom: 8px;
+    }
+
+    /* empty state — 4 verbos do loop */
+    .lt-empty {
+      padding: 96px 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 64px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .lt-empty-quote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.2; letter-spacing: -0.025em;
+      color: var(--tinta); margin: 0;
+      text-align: center;
+    }
+    .lt-empty-quote em.kw {
+      font-style: italic; color: var(--cobre-profundo); font-weight: 500;
+    }
+    .lt-loop {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding: 32px;
+      background: color-mix(in srgb, var(--pergaminho) 60%, transparent);
+      border: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 30%, transparent);
+      border-radius: 12px;
+    }
+    .lt-loop-step {
+      text-align: center;
+      padding: 16px 8px;
+    }
+    .lt-loop-step .step-roman {
+      font-family: var(--font-display);
+      font-style: italic; font-weight: 500;
+      font-size: 28px; color: var(--cobre-profundo);
+      letter-spacing: -0.02em;
+      display: block; margin-bottom: 8px;
+    }
+    .lt-loop-step .step-word {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 22px; color: var(--tinta);
+      letter-spacing: -0.02em;
+    }
+    .lt-loop-step.is-current {
+      background: color-mix(in srgb, var(--cobre) 12%, transparent);
+      border-radius: 8px;
+    }
+    .lt-loop-step.is-current .step-roman { color: var(--cobre); }
+    .lt-empty-tail {
+      text-align: center;
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--grafite); letter-spacing: 0.4px;
+    }
+    .lt-empty-tail strong {
+      color: var(--cobre-profundo); font-weight: 500;
+    }
+
+    .lt-footer {
+      padding: 32px 0 48px;
+      border-top: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 720px) {
+      .lt-header { grid-template-columns: 1fr; gap: 20px; padding: 48px 0 32px; }
+      .lt-count { text-align: left; padding-bottom: 0; }
+      .lt-empty { padding: 56px 0; gap: 40px; }
+      .lt-loop { grid-template-columns: repeat(2, 1fr); padding: 20px; gap: 16px; }
+      .lt-links { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      .lt-roman::before { content: "II."; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="lt-wrap">
+
+    <nav class="lt-topbar">
+      <a class="lt-wm" href="../../index.html">
+        <span>gustavo alves<span class="dot">.</span></span>
+        <span class="lt-wm-tag">{ caderno · estudos }</span>
+      </a>
+      <div class="lt-links">
+        <a href="../news/index.html">news</a>
+        <a class="is-current" href="#">estudos</a>
+        <a href="../registro/index.html">registro</a>
+        <a href="../brisas/index.html">brisas</a>
+        <a href="../image-video/index.html">image/video</a>
+        <a href="../../index.html" class="lt-back">← cadernos</a>
+      </div>
+    </nav>
+
+    <header class="lt-header">
+      <div class="lt-num">
+        nº · caderno
+        <strong>02</strong>
+      </div>
+      <div class="lt-title-block">
+        <div class="lt-kicker">{ loop · 0 peças }</div>
+        <h1 class="lt-title"><span class="lt-roman" aria-hidden="true"></span>estudos</h1>
+        <p class="lt-sub">loop fechado: <em class="kw">leio, escrevo, ensino, refaço</em>. ainda sem ciclo completo aqui.</p>
+      </div>
+      <div class="lt-count">nada ainda</div>
+    </header>
+
+    <section class="lt-empty">
+      <p class="lt-empty-quote">o ciclo é <em class="kw">o método</em>. peça publicada é só a forma final.</p>
+
+      <div class="lt-loop" aria-label="loop de estudo">
+        <div class="lt-loop-step is-current">
+          <span class="step-roman">I.</span>
+          <span class="step-word">leio</span>
+        </div>
+        <div class="lt-loop-step">
+          <span class="step-roman">II.</span>
+          <span class="step-word">escrevo</span>
+        </div>
+        <div class="lt-loop-step">
+          <span class="step-roman">III.</span>
+          <span class="step-word">ensino</span>
+        </div>
+        <div class="lt-loop-step">
+          <span class="step-roman">IV.</span>
+          <span class="step-word">refaço</span>
+        </div>
+      </div>
+
+      <p class="lt-empty-tail">tá no forno. <strong>quando o ciclo fechar pela primeira vez, abre aqui.</strong></p>
+    </section>
+
+    <footer class="lt-footer">
+      atualizado 25 mai 2026 · estudos · v0.0.1
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+# --- conteúdo privado / interno (não sobe pro repo público) ---
+
+# rascunhos em markdown (fonte privada antes do publish)
+drafts/
+
+# skills internas (markdown-to-blog, etc.) — ferramentas, não conteúdo
+md-html/
+texto-md/
+post-news/
+
+# doc interno do hub
+_playbook.md
+
+# brief + bundle do claude design (histórico, não-público)
+md-html/reference/
+**/handoff/
+
+# testes / legacy local (posts antigos que não vão pro ar)
+testes/
+
+# --- sistema ---
+.DS_Store
+Thumbs.db
+*.log
+
+# --- editores ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- secrets ---
+.env
+.env.*
+!.env.example

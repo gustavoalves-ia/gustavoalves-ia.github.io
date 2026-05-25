@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>news · gustavo alves</title>
+  <meta name="description" content="o que importa do que saiu, sem o hype.">
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--pergaminho-q);
+      color: var(--tinta);
+      font-family: var(--font-body);
+      min-height: 100vh;
+    }
+    .lt-wrap { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    @media (max-width: 720px) { .lt-wrap { padding: 0 28px; } }
+
+    .lt-topbar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-wm {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--tinta);
+      display: inline-flex; align-items: baseline; gap: 14px;
+      text-decoration: none;
+    }
+    .lt-wm .dot { color: var(--cobre-profundo); }
+    .lt-wm-tag {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      padding-left: 14px;
+      border-left: 0.5px solid color-mix(in srgb, var(--tinta) 25%, transparent);
+    }
+    .lt-links { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 13px; }
+    .lt-links a {
+      color: var(--grafite); text-decoration: none; letter-spacing: 0.3px;
+      transition: color 120ms ease;
+    }
+    .lt-links a:hover { color: var(--cobre-profundo); }
+    .lt-links a.is-current { color: var(--tinta); border-bottom: 1px solid var(--cobre-profundo); padding-bottom: 2px; }
+    .lt-back { color: var(--cobre-profundo) !important; }
+
+    .lt-header {
+      padding: 80px 0 56px;
+      display: grid;
+      grid-template-columns: 128px 1fr auto;
+      gap: 32px;
+      align-items: end;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-num {
+      font-family: var(--font-mono); font-size: 14px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px;
+    }
+    .lt-num strong {
+      display: block; font-family: var(--font-display); font-weight: 700;
+      font-size: 56px; color: var(--tinta); letter-spacing: -0.03em;
+      line-height: 1; margin-top: 8px;
+    }
+    .lt-kicker {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .lt-title {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.95; letter-spacing: -0.04em;
+      color: var(--tinta); margin: 0;
+    }
+    .lt-sub {
+      font-size: 18px; line-height: 1.5; color: var(--grafite);
+      margin: 18px 0 0; max-width: 540px;
+    }
+    .lt-sub em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; }
+    .lt-count {
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px; text-align: right; align-self: end; padding-bottom: 8px;
+    }
+
+    /* empty state — boletim em branco */
+    .lt-empty {
+      padding: 96px 0;
+      max-width: 720px; margin: 0 auto; text-align: center;
+    }
+    .lt-empty-stamp {
+      display: inline-block;
+      font-family: var(--font-mono); font-size: 14px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.5px;
+      text-transform: lowercase;
+      padding: 10px 18px;
+      border: 1px solid var(--cobre-profundo);
+      border-radius: 4px;
+      transform: rotate(-2deg);
+      margin-bottom: 48px;
+    }
+    .lt-empty-quote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.2; letter-spacing: -0.025em;
+      color: var(--tinta); margin: 0;
+    }
+    .lt-empty-quote em.kw {
+      font-style: italic; color: var(--cobre-profundo); font-weight: 500;
+    }
+    .lt-empty-tail {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--grafite); letter-spacing: 0.4px;
+      margin: 32px 0 0;
+    }
+    .lt-empty-tail strong { color: var(--cobre-profundo); font-weight: 500; }
+
+    .lt-footer {
+      padding: 32px 0 48px;
+      border-top: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 720px) {
+      .lt-header { grid-template-columns: 1fr; gap: 20px; padding: 48px 0 32px; }
+      .lt-count { text-align: left; padding-bottom: 0; }
+      .lt-empty { padding: 56px 0; }
+      .lt-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lt-wrap">
+
+    <nav class="lt-topbar">
+      <a class="lt-wm" href="../../index.html">
+        <span>gustavo alves<span class="dot">.</span></span>
+        <span class="lt-wm-tag">{ techne · news }</span>
+      </a>
+      <div class="lt-links">
+        <a class="is-current" href="#">news</a>
+        <a href="../estudos/index.html">estudos</a>
+        <a href="../registro/index.html">registro</a>
+        <a href="../brisas/index.html">brisas</a>
+        <a href="../image-video/index.html">image/video</a>
+        <a href="../../index.html" class="lt-back">← cadernos</a>
+      </div>
+    </nav>
+
+    <header class="lt-header">
+      <div class="lt-num">nº · caderno<strong>03</strong></div>
+      <div class="lt-title-block">
+        <div class="lt-kicker">{ boletim · 0 peças }</div>
+        <h1 class="lt-title">news</h1>
+        <p class="lt-sub">o que importa do que saiu, <em class="kw">sem o hype</em>. recap de release, anúncio ou notícia que vale parar pra ler.</p>
+      </div>
+      <div class="lt-count">ainda nada</div>
+    </header>
+
+    <section class="lt-empty">
+      <span class="lt-empty-stamp">~.~.~.26</span>
+      <p class="lt-empty-quote">primeira notícia em breve. <em class="kw">quando sair coisa que vale</em>, paro tudo e escrevo.</p>
+      <p class="lt-empty-tail">sem hype no meio. <strong>se chegou aqui, é porque importa.</strong></p>
+    </section>
+
+    <footer class="lt-footer">
+      atualizado 25 mai 2026 · news · v0.0.1
+    </footer>
+
+  </div>
+</body>
+</html>

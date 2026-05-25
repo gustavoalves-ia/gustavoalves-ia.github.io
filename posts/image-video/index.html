@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>image / video · gustavo alves</title>
+  <meta name="description" content="quando palavra não dá conta.">
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--pergaminho);
+      color: var(--tinta);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lt-wrap { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    @media (max-width: 720px) { .lt-wrap { padding: 0 28px; } }
+
+    .lt-topbar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-wm {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--tinta);
+      display: inline-flex; align-items: baseline; gap: 14px;
+      text-decoration: none;
+    }
+    .lt-wm .dot { color: var(--cobre-profundo); }
+    .lt-wm-tag {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      padding-left: 14px;
+      border-left: 0.5px solid color-mix(in srgb, var(--tinta) 25%, transparent);
+    }
+    .lt-links { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 13px; }
+    .lt-links a {
+      color: var(--grafite); text-decoration: none; letter-spacing: 0.3px;
+      transition: color 120ms ease;
+    }
+    .lt-links a:hover { color: var(--cobre-profundo); }
+    .lt-links a.is-current { color: var(--tinta); border-bottom: 1px solid var(--cobre-profundo); padding-bottom: 2px; }
+    .lt-back { color: var(--cobre-profundo) !important; }
+
+    .lt-header {
+      padding: 80px 0 56px;
+      display: grid;
+      grid-template-columns: 128px 1fr auto;
+      gap: 32px;
+      align-items: end;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-num {
+      font-family: var(--font-mono); font-size: 14px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px;
+    }
+    .lt-num strong {
+      display: block; font-family: var(--font-display); font-weight: 700;
+      font-size: 56px; color: var(--tinta); letter-spacing: -0.03em;
+      line-height: 1; margin-top: 8px;
+    }
+    .lt-kicker {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .lt-title {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 0.95; letter-spacing: -0.025em;
+      color: var(--tinta); margin: 0;
+    }
+    .lt-title .slash {
+      color: var(--cobre-profundo); font-weight: 300;
+      margin: 0 0.1em;
+    }
+    .lt-sub {
+      font-size: 18px; line-height: 1.5; color: var(--grafite);
+      margin: 18px 0 0; max-width: 540px;
+    }
+    .lt-sub em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; }
+    .lt-count {
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px; text-align: right; align-self: end; padding-bottom: 8px;
+    }
+
+    /* empty state — molduras vazias */
+    .lt-empty {
+      padding: 96px 0;
+      display: grid; gap: 56px;
+      max-width: 820px; margin: 0 auto;
+    }
+    .lt-frames {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .lt-frame {
+      aspect-ratio: 16 / 10;
+      border: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 35%, transparent);
+      background: color-mix(in srgb, var(--tinta) 4%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 11px;
+      color: color-mix(in srgb, var(--tinta) 35%, transparent);
+      letter-spacing: 0.5px;
+    }
+    .lt-frame:nth-child(2) { aspect-ratio: 1 / 1; }
+    .lt-frame:nth-child(3) { aspect-ratio: 9 / 12; }
+
+    .lt-empty-quote {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.2; letter-spacing: -0.025em;
+      color: var(--tinta); margin: 0;
+      text-align: center;
+    }
+    .lt-empty-quote em.kw {
+      font-style: italic; color: var(--cobre-profundo); font-weight: 500;
+    }
+    .lt-empty-tail {
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--grafite); letter-spacing: 0.4px;
+      text-align: center;
+    }
+    .lt-empty-tail strong { color: var(--cobre-profundo); font-weight: 500; }
+
+    .lt-footer {
+      padding: 32px 0 48px;
+      border-top: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px;
+    }
+
+    @media (max-width: 720px) {
+      .lt-header { grid-template-columns: 1fr; gap: 20px; padding: 48px 0 32px; }
+      .lt-count { text-align: left; padding-bottom: 0; }
+      .lt-empty { padding: 56px 0; gap: 40px; }
+      .lt-frames { grid-template-columns: 1fr; gap: 16px; }
+      .lt-frame:nth-child(2), .lt-frame:nth-child(3) { aspect-ratio: 16 / 10; }
+      .lt-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lt-wrap">
+
+    <nav class="lt-topbar">
+      <a class="lt-wm" href="../../index.html">
+        <span>gustavo alves<span class="dot">.</span></span>
+        <span class="lt-wm-tag">{ caderno · image/video }</span>
+      </a>
+      <div class="lt-links">
+        <a href="../news/index.html">news</a>
+        <a href="../estudos/index.html">estudos</a>
+        <a href="../registro/index.html">registro</a>
+        <a href="../brisas/index.html">brisas</a>
+        <a class="is-current" href="#">image/video</a>
+        <a href="../../index.html" class="lt-back">← cadernos</a>
+      </div>
+    </nav>
+
+    <header class="lt-header">
+      <div class="lt-num">nº · caderno<strong>05</strong></div>
+      <div class="lt-title-block">
+        <div class="lt-kicker">{ vitrine · 0 peças }</div>
+        <h1 class="lt-title">image<span class="slash">/</span>video</h1>
+        <p class="lt-sub">quando palavra <em class="kw">não dá conta</em>. foto, vídeo, peça visual que sobreviveu ao corte.</p>
+      </div>
+      <div class="lt-count">ainda nada</div>
+    </header>
+
+    <section class="lt-empty">
+      <div class="lt-frames" aria-hidden="true">
+        <div class="lt-frame">{ 16:10 }</div>
+        <div class="lt-frame">{ 1:1 }</div>
+        <div class="lt-frame">{ 9:12 }</div>
+      </div>
+      <p class="lt-empty-quote">primeira peça em breve. <em class="kw">vitrine em montagem.</em></p>
+      <p class="lt-empty-tail">tô gerando, testando, descartando. <strong>o que sobreviver ao corte, pendura aqui.</strong></p>
+    </section>
+
+    <footer class="lt-footer">
+      atualizado 25 mai 2026 · image/video · v0.0.1
+    </footer>
+
+  </div>
+</body>
+</html>

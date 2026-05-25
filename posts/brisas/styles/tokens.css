@@ -1,0 +1,88 @@
+/* =========================================================================
+   Gustavo Alves — tokens compartilhados
+   (paleta + tipo + espaço + raios)
+   Fonte de verdade: design-system v1.0.
+   Estes tokens são os mesmos da linha "registro" — não duplique numa pasta
+   por linha editorial.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+:root {
+  /* ---------- COR — paleta principal ---------- */
+  --tinta:           #1A1612;
+  --cobre:           #D88A4A;
+  --cobre-profundo:  #8A4F22;
+  --pergaminho:      #F4EFE6;
+  --grafite:         #5F574E;
+
+  /* ---------- COR — variações tonais ---------- */
+  --tinta-suave:     #2A241F;
+  --cobre-claro:     #E8A878;
+  --pergaminho-q:    #EAE3D5;
+
+  /* ---------- COR — semântico ---------- */
+  --bg:              var(--pergaminho);
+  --bg-elev:         var(--pergaminho-q);
+  --bg-inverse:      var(--tinta);
+  --fg:              var(--tinta);
+  --fg-muted:        var(--grafite);
+  --fg-inverse:      var(--pergaminho);
+  --accent:          var(--cobre);
+  --accent-deep:     var(--cobre-profundo);
+  --rule:            color-mix(in srgb, var(--grafite) 30%, transparent);
+
+  /* ---------- TIPO — famílias ---------- */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body:    'Space Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---------- TIPO — pesos ---------- */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+
+  /* ---------- TIPO — escala ---------- */
+  --display-xl: 64px;
+  --display-lg: 48px;
+  --display-md: 36px;
+  --display-sm: 28px;
+  --body-lg:    18px;
+  --body-md:    16px;
+  --body-sm:    14px;
+  --mono-md:    14px;
+  --mono-sm:    12px;
+
+  /* ---------- ESPAÇAMENTO (4px base) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* ---------- RAIOS ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* Reset minimal */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: 1.6;
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

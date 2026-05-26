@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 002 · vault que cresce, mas não infla · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#" style="color: var(--cobre-claro);">registro</a>
+      <a href="../estudos/index.html">estudos</a>
+      <a href="../brisas/index.html">brisas</a>
+      <a href="../image-video/index.html">image/video</a>
+      <a href="../../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">build-log</span> / nº 002
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">002</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · build-log · 26 mai 2026 }</div>
+      <h1 class="t-title">vault que cresce, mas não <em class="kw">infla</em>.</h1>
+      <p class="t-sub">como deixei meu espaço de criação aguentar virar 10x maior sem cada conversa ficar mais cara.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">26 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">4 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">680</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>o que rolou</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>o que aprendi</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>fecho</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Joguei fora um catálogo inteiro hoje. 88 linhas que eu achava que eram organização. Eram <em class="kw">cemitério</em>.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. o que rolou</span>
+        catálogo virou cemitério, busca virou vida
+      </h2>
+
+      <p class="t-p">
+        Comecei a sessão querendo só arrumar uma pasta. Mover uns rascunhos de teste pra fora da raiz de <code class="t-inline">drafts/</code>. Coisinha pequena. Aí olhei pro <code class="t-inline">_playbook.md</code> do blog e travei. 88 linhas. Lista de cada draft, de cada post publicado, de cada arquivo "em construção". Tudo escrito à mão, tudo desatualizando a cada arquivo novo.
+      </p>
+
+      <p class="t-p">
+        A função do <em>playbook</em> (que é tipo um índice da pasta, pra eu e o agente saberem o que vive ali) era ser hub. Não inventário. Cada vez que um post novo nascia, alguém ia ter que abrir o playbook e escrever mais uma linha. Eu, ou o agente. Trabalho manual que decora um arquivo que já tinha resposta no próprio sistema de arquivos: <code class="t-inline">ls drafts/</code> faz exatamente isso, em zero token.
+      </p>
+
+      <p class="t-p">
+        Aí caiu a ficha. Catálogo manual é mentira de organização. Parece arrumado, mas é só dívida acumulada. Cresce 1 linha por arquivo, e quando você tem 60 posts, são 60 linhas mortas que ninguém lê e que vão desatualizando porque ninguém atualiza tudo sempre.
+      </p>
+
+      <blockquote class="t-quote">
+        Catálogo é cemitério. Busca é vida.
+      </blockquote>
+
+      <p class="t-p">
+        Cortei o princípio formal: playbook responde <strong>intenção → caminho</strong>. Só isso. Não cataloga (o filesystem responde). Não explica como skill funciona (o <code class="t-inline">SKILL.md</code> da própria skill responde). Não duplica conteúdo de página (o <code class="t-inline">grep</code> responde). Só cresce quando nasce intenção nova, ou regra dura que não vive em outro lugar.
+      </p>
+
+      <p class="t-p">
+        Apliquei no blog primeiro. De 88 pra 61 linhas. Aí o gosto bateu: e os outros 14 playbooks do vault? Despachei três agentes em paralelo, cada um pegou uma leva. Voltaram em alguns minutos. Variação de tamanho dos playbooks caiu de 41-88 pra 44-61 linhas. Não foi corte gigante na soma, mas agora todo playbook segue a mesma forma. Agente abre qualquer um, sabe onde achar a tabela de decisão.
+      </p>
+
+      <p class="t-p">
+        Depois veio a segunda parte: tag canônica. Vocabulário fechado de tags hierárquicas, <code class="t-inline">canal/blog</code>, <code class="t-inline">tema/ia</code>, <code class="t-inline">estado/draft</code>. Toda publicação nova vem com declaração de intenção, não palavra-chave solta. Antes, se eu perguntasse "tem algo sobre IA no blog?", o agente caçava palavra "IA" em 18 arquivos. Agora <code class="t-inline">grep -rl 'tema/ia' drafts/</code> traz só os 3 que são <em>sobre</em> IA de verdade. Quatro vezes menos token, zero falso positivo.
+      </p>
+
+      <p class="t-p">
+        Atualizei as oito <em>skills</em> que geram conteúdo (rascunho de blog, registro de sessão, news, deep dive, pesquisa, ideia, captura, formato de texto). Próximo arquivo que entrar no vault já nasce com tag canônica. Os antigos migram quando eu tocar neles.
+      </p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. o que aprendi</span>
+        desapego dá durabilidade
+      </h2>
+
+      <p class="t-p">
+        <strong>Desapego de mudar é o que dá durabilidade.</strong> A vontade era arrumar mais um arquivinho e seguir. Parei. Refiz princípio inteiro. Dor de uma sessão, economia que paga sozinha por meses. Quem quer espaço que dura tem que se permitir mudar antes do sistema te obrigar.
+      </p>
+
+      <p class="t-p">
+        <strong>Hub bom ensina estratégia, não armazena resultado.</strong> Playbook não diz "tem X, Y, Z arquivos aqui". Diz "se quiser saber o que tem, roda <code class="t-inline">ls</code>. Se quiser saber sobre que tema, roda <code class="t-inline">grep</code>". A ferramenta vira mapa pro próprio sistema se virar, e o sistema cresce sem o mapa engordar junto.
+      </p>
+
+      <p class="t-p">
+        <strong>Tag canônica é declaração de intenção, não palavra-chave.</strong> Esse aqui me pegou. Palavra solta aparece em qualquer texto que mencione o assunto. Tag com vocabulário fechado diz: este post É sobre isso.
+      </p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. fecho</span>
+        o que dura, dura mesmo
+      </h2>
+
+      <blockquote class="t-quote">
+        Tudo que é bom, dura muito!
+      </blockquote>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">refatoração estrutural</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">vault inteiro</span></div>
+      <div class="t-meta-row"><span>escopo</span><span class="t-meta-strong">15 hubs + 8 skills</span></div>
+      <div class="t-meta-row"><span>recorte</span><span class="t-meta-cobre">88 → 61 lin no blog</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>catálogo é cemitério; busca é vida</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ vault · navegacao · tag-canonica · principio · skill }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 26 mai 2026</div>
+    <div class="t-end-sig">{ próximo: ainda não sei kk }</div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

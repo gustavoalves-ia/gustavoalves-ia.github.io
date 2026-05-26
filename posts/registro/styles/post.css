@@ -248,6 +248,7 @@ body.on-dark {
 .t-quote {
   margin: 40px 0;
   padding: 0 0 0 28px;
+  background: transparent;
   border-left: 3px solid var(--cobre);
   border-radius: 0;
   font-family: var(--font-display);

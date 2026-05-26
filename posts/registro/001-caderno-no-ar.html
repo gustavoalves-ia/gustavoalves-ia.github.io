@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 001 · caderno no ar · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#" style="color: var(--cobre-claro);">registro</a>
+      <a href="../estudos/index.html">estudos</a>
+      <a href="../brisas/index.html">brisas</a>
+      <a href="../image-video/index.html">image/video</a>
+      <a href="../../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">build-log</span> / nº 001
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">001</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · build-log · 25 mai 2026 }</div>
+      <h1 class="t-title">caderno <em class="kw">no ar</em>.</h1>
+      <p class="t-sub">primeiro post saindo. blog publicado. cinco cadernos abertos, todos vazios, todos honestos. tudo de graça.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">25 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">3 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">580</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>o que rolou</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>o que aprendi</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>fecho</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Caderno aberto, no ar. Primeiro post de registro saindo agora. Demorei pra montar, foi mais simples do que parecia. Era mais o <em class="kw">medo</em> mesmo...
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. o que rolou</span>
+        sentei pra montar e o blog ficou de pé
+      </h2>
+
+      <p class="t-p">
+        Sentei pra montar o blog (caderno é mais dahora). Cansei de site bonito sem nada dentro. Queria caderno mesmo, lugar pra escrever processo, percepção, notícia que importa, estudo que tá fechando, peça visual. Cinco cadernos, cada um com clima próprio, separados na cabeça do leitor desde a porta de entrada.
+      </p>
+
+      <p class="t-p">
+        Cinco portas, uma por caderno. Cada porta com cara diferente, dando pista do clima de dentro. <em>Registro</em> fundo tinta, técnico. <em>News</em> com carimbo de data que bate como manchete quando passa o mouse. <em>Brisas</em> é pra as brisa loka que vem na cabeça, tipo papel ao vento. <em>Estudos</em> com algarismo romano, gosto de mitologia grega (não muito da filosofia, prefiro uma coisa mais moderna Nietchana) <code class="t-inline">I → II → III → IV</code>, o loop que o caderno representa. <em>Image/video</em> com moldura inclinada. Tudo HTML standalone (sem arruma b.o pra cabeça), sem framework, sem etapa de build.
+      </p>
+
+      <p class="t-p">
+        Cheguei a subir cinco cadernos cheios de post de teste. Olhei o resultado pronto, mas achei que devia começar do zero. Tirei tudo. Subiu só a casca: home + cinco cadernos vazios, cada um com estado vazio honesto na minha voz. Registro fala "primeiro post-mortem em breve". Brisas fala "quando der na telha". Estudos mostra os quatro verbos do ciclo (leio, escrevo, ensino, refaço) pra dizer "ainda não fechou". Image/video mostra três molduras vazias com "vitrine em montagem".
+      </p>
+
+      <blockquote class="t-quote">
+        Casca honesta bate mais que catálogo inventado.
+      </blockquote>
+
+      <p class="t-p">
+        Versionamento foi rápido. <code class="t-inline">git init</code> (metade dos vide coder nem sabe o que é) na pasta do blog, <code class="t-inline">.gitignore</code> deixando de fora os rascunhos, as skills internas e a pasta de testes. Treze arquivos públicos sobem. Repo no GitHub. Renomeei a conta pra <code class="t-inline">gustavoalves-ia</code>, criei o repo <code class="t-inline">gustavoalves-ia.github.io</code>, nome especial que faz o site morar na raiz, sem <code class="t-inline">/caderno-aberto</code> no caminho. Pages ativou sozinho na criação. Push em <code class="t-inline">main</code> igual a site rebuilda em trinta segundos. (Escreveu, editou, subiu.)
+      </p>
+
+      <p class="t-p">
+        Paguei zero real. GitHub Pages grátis pra conta pessoal. Fonts via Google Fonts CDN, grátis. Mockup inicial montado no Claude Design, faz parte do plano que eu já uso. Tenho domínio próprio mas reservei pra outra coisa. Por enquanto o site mora em <code class="t-inline">gustavoalves-ia.github.io</code>. Sem custo recorrente, sem cartão de crédito em lugar nenhum.
+      </p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. o que aprendi</span>
+        barreira de entrada caiu, sobrou a coragem
+      </h2>
+
+      <p class="t-p">
+        <strong>Hospedagem de graça mudou o cálculo de quando começar.</strong> GitHub Pages aceita HTML estático, faz build sozinho, dá HTTPS sem custo. Não precisa de Vercel, Netlify, servidor pago. Pra blog que é texto e CSS, é só <code class="t-inline">git push</code>. A barreira de entrada caiu pra zero, e isso muda quando você começa: a única coisa que faltava era a <em class="kw">coragem</em>...
+      </p>
+
+      <p class="t-p">
+        <strong>Skill que automatiza listing fechou o loop.</strong> Sem ela, cada post novo me obrigaria a editar o HTML da lista manualmente. Aí eu não publicaria. Construí <code class="t-inline">/atualizar-listing</code> que lê o frontmatter (como se fosse o sumário, pra você saber onde tá as coisas) do rascunho, renderiza o item, injeta na lista certa, atualiza contagem. O fluxo fecha sozinho. Sem isso, tudo aqui parava no terceiro post.
+      </p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. fecho</span>
+        é só fazer
+      </h2>
+
+      <blockquote class="t-quote">
+        Quem quer tem que querer.
+      </blockquote>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">publicação inicial</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">caderno aberto</span></div>
+      <div class="t-meta-row"><span>escopo</span><span class="t-meta-strong">home + 5 listas</span></div>
+      <div class="t-meta-row"><span>arquivos</span><span class="t-meta-strong">13 públicos</span></div>
+      <div class="t-meta-row"><span>custo</span><span class="t-meta-cobre">R$ 0</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>casca honesta &gt; catálogo inventado</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ blog · github-pages · publicacao · caderno-aberto · html-estatico · custo-zero }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 25 mai 2026</div>
+    <div class="t-end-sig">{ próximo: ainda não sei kk }</div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

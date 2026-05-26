@@ -85,6 +85,53 @@
       letter-spacing: 0.4px; text-align: right; align-self: end; padding-bottom: 8px;
     }
 
+    /* lista de posts (dormente até skill atualizar-listing inserir items) */
+    .lt-list { padding: 0 0 96px; }
+    .lt-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 160px 48px;
+      gap: 24px;
+      align-items: center;
+      padding: 32px 0;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 12%, transparent);
+      text-decoration: none; color: inherit;
+      transition: padding 220ms ease, background 220ms ease;
+    }
+    .lt-item:hover {
+      padding-left: 12px; padding-right: 12px;
+      background: color-mix(in srgb, var(--cobre) 8%, transparent);
+    }
+    .lt-item-num {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: var(--cobre); letter-spacing: 0.5px;
+      align-self: start; padding-top: 6px;
+    }
+    .lt-item-title {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(22px, 2.6vw, 32px); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--pergaminho);
+      margin: 0;
+    }
+    .lt-item-title em.kw { font-style: italic; color: var(--cobre); }
+    .lt-item-drop {
+      font-size: 15px; line-height: 1.5;
+      color: color-mix(in srgb, var(--pergaminho) 65%, transparent);
+      margin: 10px 0 0; max-width: 580px;
+    }
+    .lt-item-meta {
+      font-family: var(--font-mono); font-size: 12px;
+      color: color-mix(in srgb, var(--pergaminho) 55%, transparent);
+      letter-spacing: 0.4px; text-align: right;
+      align-self: start; padding-top: 8px;
+    }
+    .lt-item-arrow {
+      font-family: var(--font-mono); font-size: 24px;
+      color: color-mix(in srgb, var(--pergaminho) 40%, transparent);
+      text-align: right; align-self: center;
+      transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1), color 220ms ease;
+    }
+    .lt-item:hover .lt-item-arrow { transform: translateX(8px); color: var(--cobre); }
+
     /* empty state */
     .lt-empty {
       padding: 96px 0;
@@ -121,6 +168,14 @@
       .lt-header { grid-template-columns: 1fr; gap: 20px; padding: 48px 0 32px; }
       .lt-count { text-align: left; padding-bottom: 0; }
       .lt-empty { padding: 56px 0; }
+      .lt-item {
+        grid-template-columns: 48px 1fr 32px;
+        gap: 16px; padding: 24px 0;
+      }
+      .lt-item-meta {
+        grid-column: 2 / 3; grid-row: 3; text-align: left;
+        padding-top: 4px; margin-top: 6px;
+      }
       .lt-links { display: none; }
     }
   </style>
@@ -146,17 +201,24 @@
     <header class="lt-header">
       <div class="lt-num">nº · caderno<strong>01</strong></div>
       <div class="lt-title-block">
-        <div class="lt-kicker">{ techne · build-log · 0 peças }</div>
+        <div class="lt-kicker">{ techne · build-log · 1 peça }</div>
         <h1 class="lt-title">registro</h1>
         <p class="lt-sub">o que aprendi <em class="kw">quebrando algo</em> essa semana. processo, post-mortem, técnica que funcionou e técnica que não.</p>
       </div>
-      <div class="lt-count">ainda nada</div>
+      <div class="lt-count">última: 25 mai 2026</div>
     </header>
 
-    <section class="lt-empty">
-      <p class="lt-empty-quote">primeiro post-mortem em breve. <em class="kw">tô construindo, errando, descobrindo.</em></p>
-      <p class="lt-empty-tail">quando quebrar algo que valha registrar, <strong>aparece aqui.</strong></p>
-    </section>
+    <main class="lt-list">
+      <a class="lt-item" href="001-caderno-no-ar.html">
+        <span class="lt-item-num">001</span>
+        <div>
+          <h2 class="lt-item-title">caderno <em class="kw">no ar</em></h2>
+          <p class="lt-item-drop">primeiro post saindo. blog publicado. cinco cadernos abertos, todos vazios, todos honestos. tudo de graça.</p>
+        </div>
+        <div class="lt-item-meta">25 mai · 3 min</div>
+        <span class="lt-item-arrow" aria-hidden="true">→</span>
+      </a>
+    </main>
 
     <footer class="lt-footer">
       atualizado 25 mai 2026 · registro · v0.0.1

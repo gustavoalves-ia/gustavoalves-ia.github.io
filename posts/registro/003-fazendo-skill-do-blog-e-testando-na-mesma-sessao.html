@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 003 · fazendo skill do blog · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#" style="color: var(--cobre-claro);">registro</a>
+      <a href="../estudos/index.html">estudos</a>
+      <a href="../brisas/index.html">brisas</a>
+      <a href="../image-video/index.html">image/video</a>
+      <a href="../../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">build-log</span> / nº 003
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">003</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · build-log · 21 mai 2026 }</div>
+      <h1 class="t-title">fazendo <em class="kw">skill</em> do blog.</h1>
+      <p class="t-sub">skill que vira sessão de IA em post de blog. primeiro teste: documentar a própria criação.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">21 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">3 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">523</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>o que rolou</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>o que aprendi</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>fecho</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Tava precisando de um lugar pra deixar registro do que rolou nas sessões com IA. Não pra um Agente ler depois, pra eu ler depois, e talvez virar post. Aí fiz uma skill que faz isso. E usei ela pra documentar a própria <em class="kw">criação</em> dela.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. o que rolou</span>
+        a ferramenta nasceu e já virou matéria
+      </h2>
+
+      <p class="t-p">
+        A ideia bateu simples: termino uma sessão de trabalho com a IA, peço pra ela transformar o que rolou em texto de blog. Na minha voz, <em class="kw">processo visível</em>, sem virar nota de versão.
+      </p>
+
+      <blockquote class="t-quote">
+        Soltei a tarefa.
+      </blockquote>
+
+      <p class="t-p">
+        Primeira coisa que pedi: vai ler <code class="t-inline">eu.md</code> e <code class="t-inline">voz.md</code> antes de qualquer coisa. Tenho dois documentos no vault que mapeiam como eu falo, o que evito, o que detesto, frases que gosto de usar, padrões. Se a skill ignora isso, sai mais um texto genérico de blog de tech gerado por IA. Então a leitura obrigatória virou a primeira linha do <code class="t-inline">SKILL.md</code>.
+      </p>
+
+      <p class="t-p">
+        Depois decidi estrutura. Quatro blocos: gancho, o que rolou, o que aprendi, fecho. Fixa. Sem "introdução, desenvolvimento, conclusão" de redação escolar, mas também sem deixar a IA livre demais e ela acabar entregando <em class="kw">uma lista de 5 itens</em>. <strong>Estrutura fixa funciona porque tira a tentação de inventar formato e libera energia pra acertar o tom.</strong>
+      </p>
+
+      <p class="t-p">
+        Tamanho médio, uns 600 palavras. Não inflar pra parecer denso, não cortar pra caber em IG. Se a sessão deu pano pra 300, escreve 300. Se passou de 800, corta.
+      </p>
+
+      <p class="t-p">
+        Metadado entrou também, mas com regra: só lista <code class="t-inline">MCP</code> ou <code class="t-inline">skill</code> que foi protagonista da história. Se foi consultado de passagem, fica de fora. <strong>Frontmatter inflado é cheiro de quem quer parecer ocupado.</strong>
+      </p>
+
+      <p class="t-p">
+        Aí fiz a skill em si, <code class="t-inline">SKILL.md</code> + <code class="t-inline">slash command</code> apontando pro mesmo. Os dois pra mesma coisa, porque às vezes vou querer chamar com <code class="t-inline">/registro-sessao</code> no fim do dia, outras vezes vou só dizer "registra essa sessão" e a IA precisa entender.
+      </p>
+
+      <p class="t-p">
+        E veio o teste: pedi pra ela documentar a própria criação. Que é o que você está lendo agora.
+      </p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. o que aprendi</span>
+        voz boa economiza ida e volta
+      </h2>
+
+      <p class="t-p">
+        <strong>Voz mapeada em doc destrava muita coisa.</strong> Antes era ida e volta com a IA, "não, mais informal", "não, isso tá motivacional demais". Depois que coloquei <code class="t-inline">eu.md</code> e <code class="t-inline">voz.md</code> no vault, é direto. Ela lê, aplica, devolve já calibrado. Não é mágica, é só ter feito o trabalho de mapear uma vez.
+      </p>
+
+      <p class="t-p">
+        Outra: skill que mexe com voz é mais assertiva. Você não roda 20 testes pra ver se tá bom. Você lê a saída e sente. Aceitar isso poupa tempo, não tentei montar na tentativa e erro, fui no rolê certo direto.
+      </p>
+
+      <p class="t-p">
+        E uma terceira que ficou ecoando: skill nova testa melhor quando ela documenta a própria criação. <em class="kw">Usar no próprio dia a dia</em>, imediato, sem precisar inventar caso de uso.
+      </p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. fecho</span>
+        terminou, usa
+      </h2>
+
+      <blockquote class="t-quote">
+        Ferramenta boa é a que você usa no mesmo dia que termina.
+      </blockquote>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">registro de sessão</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">blog + skill</span></div>
+      <div class="t-meta-row"><span>ferramenta</span><span class="t-meta-strong">registro-sessao</span></div>
+      <div class="t-meta-row"><span>recorte</span><span class="t-meta-cobre">primeiro teste</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>ferramenta boa entra em uso no mesmo dia</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ ia · agentes · skill · claude-code · vault · voz · registro-sessao }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 21 mai 2026</div>
+    <div class="t-end-sig">{ próximo: próximo registro → }</div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      recebe o próximo registro de sessão <em class="kw">antes</em> de virar post público.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -9,6 +9,11 @@ texto-md/
 post-news/
 atualizar-listing/
 
+# v2 paralelo (em teste — vault-only enquanto não promove)
+drafts-v2/
+md-html-v2/
+texto-md-v2/
+
 # doc interno do hub
 _playbook.md
 

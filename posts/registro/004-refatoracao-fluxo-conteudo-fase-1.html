@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 004 · refatoração do fluxo de conteúdo, fase 1 · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../index.html">news</a>
+      <a href="#">registro</a>
+      <a href="#">estudos</a>
+      <a href="#">brisas</a>
+      <a href="#">image/video</a>
+      <a href="../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">post-mortem</span> / nº 004
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">004</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · post-mortem · 27 mai 2026 }</div>
+      <h1 class="t-title">refatoração do fluxo de conteúdo, fase 1, separar <em class="kw">fonte</em> de canal</h1>
+      <p class="t-sub">por que registrar sessão como peça neutra antes de virar post de blog, post de IG ou roteiro de TikTok.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">27 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">6 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">1.116</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> post-mortem</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>gancho</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>erro</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>decisão</a>
+      <a class="t-toc-item" href="#s4"><span class="t-toc-num">iv.</span>roadmap</a>
+      <a class="t-toc-item" href="#s5"><span class="t-toc-num">v.</span>skill nova</a>
+      <a class="t-toc-item" href="#s6"><span class="t-toc-num">vi.</span>travadas</a>
+      <a class="t-toc-item" href="#s7"><span class="t-toc-num">vii.</span>o que fica</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Comecei a sessão querendo skill nova de Instagram. Saí dela com refatoração do fluxo de conteúdo inteiro. No meio do caminho descobri uma coisa que eu deveria ter pensado bem antes: o jeito que registro sessão hoje acopla <em class="kw">fonte</em> e canal de saída. Pensa.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. gancho</span>
+        o que era pra ser skill de instagram virou outra coisa
+      </h2>
+
+      <p class="t-p">A ideia inicial era simples. Hoje texto vira post de blog via dois passos: <code class="t-inline">texto-md</code> (que arruma o rascunho num arquivo intermediário) e <code class="t-inline">md-html</code> (que vira o HTML final, com identidade visual). Funciona bem. Faltava IG, LinkedIn, TikTok consumindo o mesmo material.</p>
+
+      <p class="t-p">Sentei pra desenhar uma <code class="t-inline">texto-ig</code> (que reapura texto pra voz do carrossel) e uma <code class="t-inline">ig-paper</code> (que renderiza slide via Paper MCP, ferramenta de design que rola fora do Claude). Decisões boas saíram rápido: capa com menos de 10 palavras, 8 a 12 slides, sem CTA pedido (chamado pra ação, tipo "comente palavra pra receber"), mistura de slides polidos com 1-2 slides crus (foto de terminal, foto de mão escrevendo).</p>
+
+      <p class="t-p">Aí veio a virada. Falei alto, ou escrevi pra mim mesmo, sei lá: "se eu tenho que reescrever a sessão desde o zero pra IG, e depois desde o zero de novo pra LinkedIn, alguma coisa tá errada".</p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. erro</span>
+        a fonte já nascia com sotaque de blog
+      </h2>
+
+      <p class="t-p">A skill <code class="t-inline">registro-sessao</code> que eu uso hoje pra fechar sessão de trabalho <strong>já entrega o registro na forma de post de blog</strong>. Voz minha, abertura, fecho, etiqueta compatível com o <code class="t-inline">md-html</code>. Sai linda. Pro blog.</p>
+
+      <p class="t-p">Pra outro canal, é dor. O Instagram tem código próprio (na minha cabeça é tipo gramática visual do canal, ritmo de slide, jeito de virada). LinkedIn idem. TikTok mais ainda. Cada canal pediria reescrever desde a sessão, porque a "fonte" já vinha temperada com voz e forma do blog.</p>
+
+      <p class="t-p">Pensa no estrago. Um post de blog é uma peça por sessão. Se eu quero IG e LinkedIn também, são três peças que nascem de três versões diferentes da mesma sessão. Multiplica trabalho. E pior: a "sessão original" não existe em lugar nenhum, ela já nasceu com sotaque de blog.</p>
+
+      <blockquote class="t-quote">
+        tem dois jeitos de você se fuder: ou se fode e não agrega, ou se fode e agrega.
+      </blockquote>
+
+      <p class="t-p">Aqui era o segundo. Se fudia <em class="kw">agregando</em>. Mas dava pra evitar agregando antes.</p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. decisão</span>
+        separar fonte de transformação
+      </h2>
+
+      <p class="t-p"><strong>Fonte</strong> vira documento neutro. Sem voz de canal, sem retórica, sem gancho. Cronologia, decisões, travadas, citações literais minhas, aprendizados candidatos e artefatos tocados. É factual, é meu, mas é seco. Serve de matéria-prima.</p>
+
+      <p class="t-p"><strong>Transformação</strong> vira skill por canal. <code class="t-inline">post-blog</code> reapura cru pra voz e forma de post de blog. <code class="t-inline">post-ig</code> reapura cru pra carrossel. <code class="t-inline">post-li</code> pra LinkedIn. <code class="t-inline">post-tt</code> pra TikTok. Cada uma carrega o código do canal dela.</p>
+
+      <p class="t-p">Uma sessão, um cru, <em class="kw">N peças</em>.</p>
+
+      <h2 id="s4" class="t-h2">
+        <span class="t-h2-num">iv. roadmap</span>
+        três fases na ordem que faz sentido
+      </h2>
+
+      <p class="t-p">Decompus em três fases, na ordem que respeita dependência causal:</p>
+
+      <ul class="t-ul">
+        <li class="t-li">
+          <span class="t-li-bullet">→</span>
+          <strong>fase 1.</strong> refatorar <code class="t-inline">registro-sessao</code> pra produzir cru neutro. fonte antes de transformação. mexer na fonte com três consumidores acoplados é ordem pior.
+        </li>
+        <li class="t-li">
+          <span class="t-li-bullet">→</span>
+          <strong>fase 2.</strong> adaptar <code class="t-inline">post-blog</code> (e a <code class="t-inline">texto-md</code> que ela usa) pra consumir cru. quando a fase 1 entregar, os derivados aprendem a comer dela.
+        </li>
+        <li class="t-li">
+          <span class="t-li-bullet">→</span>
+          <strong>fase 3.</strong> criar <code class="t-inline">texto-ig</code> + <code class="t-inline">ig-paper</code> (skill nova de Instagram). que era o ponto de partida da sessão. foi pro fim porque depende dos dois anteriores.
+        </li>
+      </ul>
+
+      <p class="t-p">Pausei o brainstorm de IG, salvei as decisões dele numa memória pra retomar depois, e ataquei a fase 1.</p>
+
+      <h2 id="s5" class="t-h2">
+        <span class="t-h2-num">v. skill nova</span>
+        sem matar a antiga
+      </h2>
+
+      <p class="t-p">Primeira pergunta de design: substituo a <code class="t-inline">registro-sessao</code> que funciona, ou crio uma <code class="t-inline">registro-cru</code> ao lado?</p>
+
+      <blockquote class="t-quote">
+        acho melhor nascer algo antes de matar o que já funciona.
+      </blockquote>
+
+      <p class="t-p">Ao lado. Skill nova convivendo com a antiga até a alternativa provar valor com peça real gerada em cima dela. Risco mínimo, custo de manter as duas é baixo (uma pasta a mais).</p>
+
+      <p class="t-p">Depois refinei o conteúdo do cru: cronologia narrativa em parágrafo (pra contexto) <strong>mais</strong> bloco de extratos estruturados (pra pinçar matéria). Híbrido. Critério de qualidade: <em class="kw">relevância sobre completude</em>, mas criterioso na relevância. Cru curto e útil vale mais que cru longo e burocrático.</p>
+
+      <p class="t-p">Salvei em <code class="t-inline">ia/sessoes/</code> (pasta nova na raiz do <code class="t-inline">ia/</code>), nome <code class="t-inline">AAAA-MM-DD-slug.md</code>. Frontmatter (sumário do arquivo, tipo metadados no topo) com <code class="t-inline">data</code>, <code class="t-inline">titulo</code>, <code class="t-inline">slug</code>, <code class="t-inline">tags</code>, <code class="t-inline">artefatos</code>, <code class="t-inline">derivados</code> e <code class="t-inline">estado</code>. Esse último é o detalhe importante: nasce <code class="t-inline">cru</code>, vira <code class="t-inline">processado</code> quando a primeira peça derivada é gerada. Skill auxiliar atualiza ao salvar. <code class="t-inline">grep</code> (busca dentro de arquivo) resolve consulta de "que cru já virou peça em que canal".</p>
+
+      <h2 id="s6" class="t-h2">
+        <span class="t-h2-num">vi. travadas</span>
+        duas honestas no caminho
+      </h2>
+
+      <p class="t-p"><strong>Primeira.</strong> O <code class="t-inline">ia/log.md</code> listava tipos <code class="t-inline">ingest</code> e <code class="t-inline">query</code> (extintos) mas faltava <code class="t-inline">deep-dive</code> e <code class="t-inline">registro</code> que o <code class="t-inline">CLAUDE.md</code> já tinha. Deriva entre fonte da verdade e arquivo dependente. Alinhei na hora, deixando o <code class="t-inline">CLAUDE.md</code> como cânone.</p>
+
+      <p class="t-p"><strong>Segunda.</strong> A skill <code class="t-inline">subagent-driven-development</code> da <code class="t-inline">superpowers</code> (estrutura pra executar plano grande com agentes paralelos) exige <code class="t-inline">worktree</code> git (cópia isolada do repositório em pasta separada). O vault não é repositório git. Confirmei com <code class="t-inline">git status</code>, retornou <code class="t-inline">fatal: not a git repository</code>.</p>
+
+      <p class="t-p">Três saídas possíveis: execução em linha mesmo (eu rodando tarefa por tarefa aqui), forçar subagentes sem isolamento, ou rodar <code class="t-inline">git init</code> pra virar repositório. Escolhi em linha. Tarefas eram markdown, não pedem infraestrutura paralela. <code class="t-inline">git init</code> no vault fica como decisão maior pra outra sessão.</p>
+
+      <h2 id="s7" class="t-h2">
+        <span class="t-h2-num">vii. o que fica</span>
+        fase 1 entregue, fase 2 na próxima
+      </h2>
+
+      <p class="t-p">Skill <code class="t-inline">/registro-cru</code> pronta. Comando funcionando. Pasta <code class="t-inline">ia/sessoes/</code> na raiz, com hub próprio. <code class="t-inline">CLAUDE.md</code> e <code class="t-inline">AGENTS.md</code> ganharam o tipo <code class="t-inline">cru</code> no log e a regra "atualizar derivados sem perguntar". O <code class="t-inline">ia/index.md</code> ganhou a seção nova.</p>
+
+      <p class="t-p">Esta sessão virou o primeiro cru de teste. A próxima sessão vai pegar esse cru e adaptar a <code class="t-inline">post-blog</code> pra consumir ele. Fase 2.</p>
+
+      <p class="t-p">A coisa que eu levo embora é: separar <em class="kw">fonte</em> de canal não é detalhe de arquitetura, é como o sistema cresce. Acoplar fonte ao primeiro canal que aparece é tentação fácil. Funciona pro primeiro, machuca no segundo, multiplica no terceiro.</p>
+
+      <p class="t-p">Quem quer tem que querer.</p>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">refatoração de fluxo</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">vault pessoal</span></div>
+      <div class="t-meta-row"><span>escopo</span><span class="t-meta-cobre">3 fases (1 entregue)</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>separar fonte de canal antes do segundo consumidor aparecer.</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ vault · skills · fluxo-conteudo · processo }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 27 mai 2026</div>
+    <div class="t-end-sig">{ próximo: nº 005 · fase 2 → }</div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

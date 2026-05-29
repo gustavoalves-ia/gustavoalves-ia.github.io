@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 006 · Projeto carrossel · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#">registro</a>
+      <a href="#">estudos</a>
+      <a href="#">brisas</a>
+      <a href="#">image/video</a>
+      <a href="../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">post-mortem</span> / nº 006
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">006</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · post-mortem · 29 mai 2026 }</div>
+      <h1 class="t-title">Projeto <em class="kw">carrossel</em></h1>
+      <p class="t-sub">Como separar fundo, texto e render local deixou o fluxo de Instagram menos mágico e mais confiável.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">29 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">5 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">1.050</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>o corte que resolveu</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>menos IA, mais controle</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>o bug que entregou a verdade</a>
+      <a class="t-toc-item" href="#s4"><span class="t-toc-num">iv.</span>o limite real</a>
+      <a class="t-toc-item" href="#s5"><span class="t-toc-num">v.</span>o que ficou pronto</a>
+      <a class="t-toc-item" href="#s6"><span class="t-toc-num">vi.</span>a lição</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Pensa numa coisa que parece simples até você tentar fazer direito: gerar um carrossel de Instagram com IA sem deixar a IA escrever texto errado dentro da imagem.
+      </p>
+
+      <p class="t-p">Porque esse é o problema. A gente olha para uma ferramenta de imagem e pensa: "beleza, faz o slide inteiro". Fundo, texto, composição, estética, tudo no mesmo bolo. Parece mais fácil.</p>
+
+      <p class="t-p">Só que o mais fácil, nesse caso, vira o mais frágil.</p>
+
+      <p class="t-p">O modelo de imagem é bom para criar atmosfera. Fundo, textura, objeto, clima. Mas texto? Fonte exata? Hex exato da paleta? Margem segura? Acento em português? Aí começa o b.o.</p>
+
+      <p class="t-p">Não é porque IA não presta não, é porque eu estava pedindo para ela fazer a parte errada.</p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. o corte que resolveu</span>
+        separar imagem de composição
+      </h2>
+
+      <p class="t-p">A virada foi separar o carrossel em duas camadas.</p>
+
+      <p class="t-p">Uma camada é imagem. Essa fica com o Gemini: capa e fechamento recebem um fundo visual, sem texto, sem letra, sem tentativa de diagramar frase.</p>
+
+      <p class="t-p">A outra camada é composição. Essa fica local, no meu computador: HTML, CSS, fonte Space Grotesk, paleta fechada, Chrome gerando PNG.</p>
+
+      <p class="t-p">Parece menos mágico.</p>
+
+      <p class="t-p">E justamente por isso funciona melhor.</p>
+
+      <p class="t-p">O texto do slide sai do <code class="t-inline">roteiro.md</code> (o arquivo com o roteiro do carrossel). O Chrome renderiza esse texto por cima do fundo. A fonte vem de um arquivo local. A cor vem de constante no código. A margem é número, não sugestão.</p>
+
+      <p class="t-p">O modelo de imagem não tem que "entender" a identidade visual inteira. Ele só precisa fazer um fundo bonito dentro de um estilo.</p>
+
+      <p class="t-p">Pensa. É uma diferença pequena na arquitetura, mas enorme no resultado.</p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. menos IA, mais controle</span>
+        usar modelo só onde ele agrega
+      </h2>
+
+      <p class="t-p">Esse projeto começou com uma decisão meio contraintuitiva: usar IA só onde ela agrega.</p>
+
+      <p class="t-p">Não onde ela impressiona.</p>
+
+      <p class="t-p">Eu poderia tentar fazer um prompt gigante: "gere um carrossel em 5 slides, com tipografia tal, paleta tal, texto tal, sem errar acento, sem mudar frase, mantendo margem". Só de escrever isso já dá para sentir o cheiro da fiotagem.</p>
+
+      <p class="t-p">Porque aí qualquer erro vira negociação com o modelo. Regera. Ajusta prompt. Tenta de novo. Acha que foi. O texto veio torto. A fonte não bateu. O fundo ficou legal, mas o slide morreu.</p>
+
+      <p class="t-p">No fluxo novo, a parte que precisa ser determinística fica determinística.</p>
+
+      <p class="t-p">Determinística (ou seja, sem depender do humor do modelo).</p>
+
+      <p class="t-p">O miolo do carrossel nem chama o Gemini. É fundo chapado, alternando claro e escuro. Capa e fecho chamam imagem. Se eu quiser refazer só a capa, rodo com <code class="t-inline">--slide 1</code>. Se quiser revisar tudo, gero a folha-contato.</p>
+
+      <p class="t-p">É mais ferramenta e menos espetáculo.</p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. o bug que entregou a verdade</span>
+        teste pequeno segurando decisão grande
+      </h2>
+
+      <p class="t-p">Teve um bug pequeno que mostrou por que teste importa.</p>
+
+      <p class="t-p">No roteiro, um slide pode ter:</p>
+
+      <pre class="t-code">imagem:
+prompt: uma coluna grega</pre>
+
+      <p class="t-p">Ou seja: imagem vazia, mas com um prompt para gerar fundo.</p>
+
+      <p class="t-p">O parser estava lendo errado. Como o campo <code class="t-inline">imagem:</code> estava vazio, ele engolia a linha de baixo e achava que a imagem era literalmente <code class="t-inline">prompt: uma coluna grega</code>.</p>
+
+      <p class="t-p">Resultado: o sistema tentaria abrir isso como caminho de arquivo.</p>
+
+      <p class="t-p">Coisa besta. Coisa que passa fácil quando você só olha o código e pensa "deve funcionar".</p>
+
+      <p class="t-p">Mas no teste apareceu. Escrevi a falha, corrigi o parser, rodei de novo. Verde.</p>
+
+      <p class="t-p">Essa parte é meio sem glamour, mas é onde o projeto fica de pé.</p>
+
+      <h2 id="s4" class="t-h2">
+        <span class="t-h2-num">iv. o limite real</span>
+        quando o código chega e a conta barra
+      </h2>
+
+      <p class="t-p">O fluxo local funcionou.</p>
+
+      <p class="t-p">Chrome gerou os PNGs. O roteiro virou slides. A folha-contato saiu. A composição ficou controlada.</p>
+
+      <p class="t-p">O que não fechou ainda foi o Gemini real, por quota. Precisa pagar né, uma coisa é você abrir o Gemini mandar o prompt baixar a imagem, outra coisa é você pedir tudo pelo lugar onde esta acostumado a trabalhar, no meu cado o Próprio Obsidian (sim coloquei meus agentes aqui dentro).</p>
+
+      <p class="t-p">A chamada chegou na API. Primeiro tinha um erro de endpoint, eu estava usando <code class="t-inline">v1</code> onde a geração de imagem precisava de <code class="t-inline">v1beta</code>. Corrigi. Depois a API respondeu de verdade: <code class="t-inline">429</code>, limite de uso.</p>
+
+      <p class="t-p">Em português claro: o código bateu na porta certa, mas a conta não tinha crédito/quota para entrar.</p>
+
+      <p class="t-p">Isso é um tipo bom de problema. Chato, mas bom. Porque não é "não sei se funciona". É "falta liberar o recurso externo".</p>
+
+      <p class="t-p">Enquanto isso, fiz um teste local com Gemini falso e Chrome real. O sistema gerou os slides em uma pasta temporária. Isso prova o pedaço que é meu: leitura do roteiro, decisão de fundo, escrita dos arquivos, HTML, render, folha-contato.</p>
+
+      <p class="t-p">O pedaço que é do Google depende de billing.</p>
+
+      <h2 id="s5" class="t-h2">
+        <span class="t-h2-num">v. o que ficou pronto</span>
+        um comando, um fluxo, uma regra
+      </h2>
+
+      <p class="t-p">Ficou um comando:</p>
+
+      <pre class="t-code">node ia\mapas\conteudo\instagram\render\src\post-ig.mjs teste-fase-3</pre>
+
+      <p class="t-p">Ficou um fluxo:</p>
+
+      <p class="t-p"><code class="t-inline">roteiro.md</code> -> fundos de capa e fecho -> HTML com texto -> PNG -> folha-contato.</p>
+
+      <p class="t-p">Ficou uma regra:</p>
+
+      <p class="t-p">modelo de imagem não escreve texto.</p>
+
+      <p class="t-p">E ficou uma spec para outro modelo continuar sem depender da minha memória da sessão. Isso para mim é importante. Não basta fazer funcionar hoje. Tem que deixar rastro para retomar amanhã.</p>
+
+      <p class="t-p">Porque projeto pequeno também apodrece se ninguém entende onde está a decisão.</p>
+
+      <h2 id="s6" class="t-h2">
+        <span class="t-h2-num">vi. a lição</span>
+        menos pedido mágico, mais responsabilidade separada
+      </h2>
+
+      <p class="t-p">A primeira versão mental era "vamos gerar carrossel com IA".</p>
+
+      <p class="t-p">A versão que prestou foi outra: "vamos usar IA para a parte incerta e código para a parte que precisa ser exata".</p>
+
+      <p class="t-p">Essa frase vale para muito mais coisa do que carrossel.</p>
+
+      <p class="t-p">Tem uma ansiedade em automatizar tudo com modelo. Só que às vezes a automação boa nasce quando você tira trabalho do modelo.</p>
+
+      <p class="t-p">Menos pedido mágico. Mais separação de responsabilidade.</p>
+
+      <blockquote class="t-quote">
+        Quem quer tem que querer.
+      </blockquote>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">post-mortem</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">Instagram</span></div>
+      <div class="t-meta-row"><span>método</span><span class="t-meta-strong">TDD</span></div>
+      <div class="t-meta-row"><span>bloqueio</span><span class="t-meta-cobre">quota Gemini</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>texto fica no código, imagem fica no modelo</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ blog · registro · ia · instagram }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 29 mai 2026</div>
+    <div class="t-end-sig"></div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

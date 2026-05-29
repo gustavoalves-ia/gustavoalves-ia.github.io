@@ -1,0 +1,548 @@
+/* =========================================================================
+   techne · news — manchete viva
+   ---------------------------------------------------------------------------
+   Variação de "post" pra notícia. Tudo que existe em post.css continua valendo.
+   Aqui mora só o que é específico de news:
+     · ticker rolando no topo
+     · data como herói gigante (no lugar do número)
+     · indicador "ao vivo" pulsando
+     · timestamps que interrompem o corpo (live-blog)
+     · timeline de atualizações na coluna direita
+     · feed de outras notícias no rodapé
+   Sem gradiente, sem neon. Só cor + tempo + ritmo.
+   ========================================================================= */
+
+/* ─── TICKER ──────────────────────────────────────────────────────────────
+   Faixa que rola horizontal abaixo da topbar. Apenas mono pequeno + cobre
+   pontual. Ritmo lento (60s) — não é stock ticker frenético, é jornal vivo.
+   ────────────────────────────────────────────────────────────────────── */
+.n-ticker {
+  border-top: 0.5px solid color-mix(in srgb, var(--pergaminho) 18%, transparent);
+  border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 18%, transparent);
+  background: var(--tinta-suave);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.n-ticker-tag {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--tinta);
+  border-right: 0.5px solid color-mix(in srgb, var(--pergaminho) 22%, transparent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+.n-ticker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cobre);
+  animation: n-pulse 1.4s ease-in-out infinite;
+}
+.n-ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 64px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 64px), transparent 100%);
+}
+.n-ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: color-mix(in srgb, var(--pergaminho) 78%, transparent);
+  letter-spacing: 0.3px;
+  animation: n-ticker-roll 64s linear infinite;
+  padding-left: 24px;
+}
+.n-ticker:hover .n-ticker-track { animation-play-state: paused; }
+.n-ticker-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 28px 0 0;
+  position: relative;
+}
+.n-ticker-item::after {
+  content: "·";
+  position: absolute;
+  right: 10px;
+  color: color-mix(in srgb, var(--pergaminho) 30%, transparent);
+}
+.n-ticker-item:last-child::after { content: none; }
+.n-ticker-time {
+  color: var(--cobre);
+  font-weight: 500;
+}
+.n-ticker-kw { color: var(--cobre-claro); font-style: italic; }
+
+@keyframes n-ticker-roll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes n-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cobre) 60%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--cobre) 0%, transparent); }
+}
+
+/* ─── HEADER · MANCHETE VIVA ──────────────────────────────────────────────
+   Substitui o número de caderno por DATA + HORA gigantes na esquerda.
+   Mesma grid do post, mas o conteúdo do "header-num-col" muda.
+   ────────────────────────────────────────────────────────────────────── */
+.t-header.is-news { padding-top: 40px; }
+
+.n-date {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  line-height: 0.9;
+}
+.n-date-day {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 156px;
+  letter-spacing: -0.05em;
+  color: var(--cobre);
+  line-height: 0.82;
+  margin: 0;
+}
+.n-date-month {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--pergaminho);
+  letter-spacing: 0.5px;
+  margin-top: 14px;
+  text-transform: lowercase;
+}
+.n-date-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: color-mix(in srgb, var(--pergaminho) 65%, transparent);
+  letter-spacing: 0.4px;
+  margin-top: 4px;
+}
+.n-date-time strong { color: var(--pergaminho); font-weight: 500; }
+
+.n-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 6px 12px;
+  border: 0.5px solid var(--cobre);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 0.6px;
+  text-transform: lowercase;
+  width: fit-content;
+}
+.n-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cobre);
+  animation: n-pulse 1.4s ease-in-out infinite;
+}
+
+/* Kicker da news ganha indicador URGENTE pontual */
+.n-kicker {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cobre);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.n-kicker-flag {
+  background: var(--cobre);
+  color: var(--tinta);
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.n-updated {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 0.5px solid color-mix(in srgb, var(--pergaminho) 18%, transparent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: color-mix(in srgb, var(--pergaminho) 60%, transparent);
+  letter-spacing: 0.4px;
+}
+.n-updated-num {
+  color: var(--cobre);
+  font-weight: 500;
+}
+
+/* ─── CRUMB com hora ──────────────────────────────────────────────────── */
+.t-crumb .n-now {
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 0.5px solid color-mix(in srgb, var(--pergaminho) 25%, transparent);
+  color: var(--cobre);
+}
+
+/* ─── TIMESTAMPS NO CORPO — interrompendo a leitura ─────────────────────
+   Marca de live-blog: cada bloco de atualização começa com "─ 14:42 · …"
+   ────────────────────────────────────────────────────────────────────── */
+.n-stamp {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 56px 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent);
+  position: relative;
+}
+.n-stamp::before {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cobre);
+}
+.n-stamp.is-latest::before {
+  animation: n-pulse 1.4s ease-in-out infinite;
+}
+.n-stamp-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 0.4px;
+  flex-shrink: 0;
+}
+.n-stamp-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--pergaminho);
+}
+.n-stamp-latest-flag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 0.5px solid var(--cobre);
+  border-radius: 3px;
+  margin-left: auto;
+  align-self: center;
+  background: color-mix(in srgb, var(--cobre) 8%, transparent);
+}
+
+/* primeiro stamp gruda no topo da prose */
+.t-prose > .n-stamp:first-child { margin-top: 8px; }
+
+/* ─── TIMELINE LATERAL · "em desenvolvimento" ────────────────────────────
+   Substitui a "nota de campo". É uma trilha vertical com os horários das
+   atualizações, marca o ponto "agora".
+   ────────────────────────────────────────────────────────────────────── */
+.n-timeline {
+  position: sticky;
+  top: 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: color-mix(in srgb, var(--pergaminho) 65%, transparent);
+  line-height: 1.5;
+  border-left: 0.5px solid color-mix(in srgb, var(--pergaminho) 24%, transparent);
+  padding-left: 24px;
+}
+.n-timeline-head {
+  color: var(--cobre);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.n-timeline-track {
+  position: relative;
+  margin-left: 6px;
+  padding-left: 22px;
+}
+.n-timeline-track::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 16px;
+  width: 1px;
+  background: color-mix(in srgb, var(--pergaminho) 18%, transparent);
+}
+.n-timeline-row {
+  position: relative;
+  padding: 6px 0 14px;
+}
+.n-timeline-row::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tinta);
+  border: 1px solid color-mix(in srgb, var(--pergaminho) 40%, transparent);
+}
+.n-timeline-row.is-done::before {
+  background: var(--cobre-profundo);
+  border-color: var(--cobre-profundo);
+}
+.n-timeline-row.is-now::before {
+  background: var(--cobre);
+  border-color: var(--cobre);
+  animation: n-pulse 1.4s ease-in-out infinite;
+}
+.n-timeline-time {
+  color: var(--pergaminho);
+  font-weight: 500;
+  display: block;
+}
+.n-timeline-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: color-mix(in srgb, var(--pergaminho) 75%, transparent);
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+.n-timeline-row.is-now .n-timeline-label { color: var(--pergaminho); }
+.n-timeline-row.is-pending .n-timeline-label {
+  color: color-mix(in srgb, var(--pergaminho) 35%, transparent);
+}
+
+.n-timeline-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent);
+}
+.n-timeline-block-head {
+  color: var(--pergaminho);
+  font-style: italic;
+  font-family: var(--font-display);
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* ─── FEED DE OUTRAS NEWS ────────────────────────────────────────────────
+   Bloco no rodapé: as outras notícias do dia em formato de feed compacto.
+   ────────────────────────────────────────────────────────────────────── */
+.n-feed {
+  max-width: 1440px;
+  margin: 80px auto 0;
+  padding: 0 64px;
+}
+.n-feed-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 18px;
+  border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 22%, transparent);
+}
+.n-feed-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -0.025em;
+  color: var(--pergaminho);
+}
+.n-feed-title em { font-style: italic; color: var(--cobre); font-weight: 700; }
+.n-feed-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: color-mix(in srgb, var(--pergaminho) 60%, transparent);
+  letter-spacing: 0.4px;
+}
+.n-feed-meta strong { color: var(--cobre); font-weight: 500; }
+
+.n-feed-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent);
+}
+.n-feed-item {
+  padding: 24px 28px 28px;
+  border-right: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent);
+  text-decoration: none;
+  color: var(--pergaminho);
+  display: block;
+  transition: background 120ms ease;
+}
+.n-feed-item:last-child { border-right: 0; }
+.n-feed-item:first-child { padding-left: 0; }
+.n-feed-item:hover { background: color-mix(in srgb, var(--pergaminho) 4%, transparent); }
+.n-feed-item-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cobre);
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.n-feed-item-time .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: color-mix(in srgb, var(--pergaminho) 35%, transparent);
+}
+.n-feed-item-time.is-fresh .dot {
+  background: var(--cobre);
+  animation: n-pulse 1.4s ease-in-out infinite;
+}
+.n-feed-item-cat {
+  color: color-mix(in srgb, var(--pergaminho) 55%, transparent);
+  margin-left: 6px;
+}
+.n-feed-item-headline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--pergaminho);
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+.n-feed-item-headline em { font-style: italic; color: var(--cobre); font-weight: 700; }
+.n-feed-item-blurb {
+  font-size: 14px;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--pergaminho) 70%, transparent);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ─── BOX "primeiro takeaway" — destaque dentro da prose ──────────────── */
+.n-take {
+  margin: 32px 0;
+  padding: 22px 24px 22px 24px;
+  background: color-mix(in srgb, var(--cobre) 8%, transparent);
+  border-left: 3px solid var(--cobre);
+  border-radius: 0;
+}
+.n-take-head {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cobre);
+  letter-spacing: 0.6px;
+  text-transform: lowercase;
+  margin-bottom: 10px;
+}
+.n-take-body {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--pergaminho);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ─── COMPARATIVO INLINE — pré X depois ───────────────────────────────── */
+.n-compare {
+  margin: 36px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: color-mix(in srgb, var(--pergaminho) 14%, transparent);
+  border: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.n-compare-col {
+  background: var(--tinta-suave);
+  padding: 22px 24px;
+}
+.n-compare-head {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cobre);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.n-compare-body {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--pergaminho);
+}
+.n-compare-col + .n-compare-col .n-compare-head { color: var(--cobre-claro); }
+.n-compare-foot {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: color-mix(in srgb, var(--pergaminho) 60%, transparent);
+  letter-spacing: 0.3px;
+}
+
+/* ─── RESPONSIVO ─────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .n-ticker-tag { padding: 8px 14px; font-size: 10px; }
+  .n-date-day { font-size: 120px; }
+  .n-feed { padding: 0 24px; }
+  .n-feed-grid { grid-template-columns: 1fr; }
+  .n-feed-item { border-right: 0; border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 14%, transparent); padding-left: 0; }
+  .n-feed-item:last-child { border-bottom: 0; }
+  .n-compare { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .n-ticker-tag { padding: 7px 12px; font-size: 10px; }
+  .n-ticker-track { font-size: 11px; animation-duration: 48s; }
+  .n-date-day { font-size: 96px; }
+  .n-date-month { font-size: 13px; }
+  .n-stamp { margin: 44px 0 18px; }
+  .n-stamp::before { left: -14px; top: 7px; }
+  .n-stamp-title { font-size: 20px; }
+  .n-take-body { font-size: 18px; }
+  .n-compare-body { font-size: 18px; }
+  .n-feed-title { font-size: 24px; }
+  .n-feed-item-headline { font-size: 19px; }
+}
+@media (max-width: 480px) {
+  .n-date-day { font-size: 76px; }
+  .n-stamp { flex-wrap: wrap; gap: 8px; }
+  .n-stamp-latest-flag { margin-left: 0; }
+  .n-feed { padding: 0 16px; margin-top: 56px; }
+  .n-feed-title { font-size: 20px; }
+  .n-feed-item { padding: 20px 0; }
+  .n-feed-item-headline { font-size: 17px; }
+}

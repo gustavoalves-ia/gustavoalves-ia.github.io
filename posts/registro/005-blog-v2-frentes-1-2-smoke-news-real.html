@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 005 · Errando e melhorando, primeira news real publicada · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <div class="t-wm">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </div>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#">registro</a>
+      <a href="#">estudos</a>
+      <a href="#">brisas</a>
+      <a href="#">image/video</a>
+      <a href="../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">post-mortem</span> / nº 005
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">005</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · post-mortem · 28 mai 2026 }</div>
+      <h1 class="t-title">Errando e <em class="kw">melhorando</em>, primeira news real publicada</h1>
+      <p class="t-sub">Duas skills paralelas pro pipeline de conteúdo, dois bugs visuais corrigidos no caminho e uma regra que ficou em três lugares pra não voltar.</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">28 mai 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">6 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">1.180</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>o problema da fase 2</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>frente 1, listing sozinho</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>frente 2, news vira fonte</a>
+      <a class="t-toc-item" href="#s4"><span class="t-toc-num">iv.</span>smoke híbrido</a>
+      <a class="t-toc-item" href="#s5"><span class="t-toc-num">v.</span>render e dois bugs</a>
+      <a class="t-toc-item" href="#s6"><span class="t-toc-num">vi.</span>deploy</a>
+      <a class="t-toc-item" href="#s7"><span class="t-toc-num">vii.</span>o que ficou</a>
+    </aside>
+
+    <article class="t-prose">
+
+      <p class="t-drop">
+        Sentei pra fechar duas pendências do blog. Tinha decidido a ordem semana passada, listing primeiro, news depois. Levantei com primeira news no ar, dois bugs corrigidos no caminho e uma regra que ficou em três lugares pra não voltar.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. o problema da fase 2</span>
+        um pedaço grudou fora do fluxo
+      </h2>
+
+      <p class="t-p">Na fase 2 do refactor do fluxo de conteúdo eu separei a skill que vira <code class="t-inline">.md</code> em HTML (<code class="t-inline">md-html-v2</code>, o motor de renderização do blog) da skill que monta o listing (a página com índice de posts no caderno). Funcionou pra publicar. Mas o listing ficava defasado, ninguém atualizava automático. Eu tinha que editar <code class="t-inline">index.html</code> (o HTML do listing) na mão depois de cada peça.</p>
+
+      <p class="t-p">Pensa. Pra um sistema que se chama "fluxo de conteúdo", deixar um pedaço grudado fora do fluxo é gambiarra.</p>
+
+      <p class="t-p">Frente 1: fazer o listing auto-atualizar quando o HTML nasce.</p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. frente 1, listing sozinho</span>
+        skill paralela que se atualiza quando o post nasce
+      </h2>
+
+      <p class="t-p">Brainstorm com quatro perguntas, decisão fechada em cada:</p>
+
+      <ul class="t-ul">
+        <li class="t-li"><span class="t-li-bullet">→</span> Skill v2 paralela à v1 (não refatora, convive). Mesma estratégia da fase 2, deu certo.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> Auto-detect da pasta de drafts (<code class="t-inline">drafts-v2/</code>, onde mora rascunho v2) sem flag.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> Chamada automática dentro do <code class="t-inline">md-html-v2</code> antes do deploy.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> Falha do listing não trava deploy. Aviso visível força resolver depois.</li>
+      </ul>
+
+      <p class="t-p">Saiu rápido. Skill criada, comando slash criado, passo novo no <code class="t-inline">md-html-v2</code>, anti-padrão "bloquear deploy por causa de listing" anotado.</p>
+
+      <p class="t-p">Smoke test destrutivo (rerodar a skill no único post v2 que existia) eu pulei. O HTML do listing tinha um realce de cor que eu tinha feito na mão na fase 2. Rerodar apagaria. Deixei pra validar no primeiro post v2 nascendo do zero.</p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. frente 2, news vira fonte</span>
+        cada notícia vira matéria-prima pra N canais
+      </h2>
+
+      <p class="t-p">Aqui o brainstorm foi mais longo. News tem estrutura rica (cronologia, ticker que roda no topo, timeline lateral, citação de fontes secundárias, imagem hero). E tem um princípio do roadmap que eu queria respeitar: <strong>separar fonte de canal</strong>.</p>
+
+      <p class="t-p">Princípio: cada peça nasce uma vez como fonte neutra, depois N canais (blog, IG, LinkedIn, TikTok) reapuram a partir dela.</p>
+
+      <p class="t-p">Decisão: a skill <code class="t-inline">post-news-v2</code> produz dois arquivos numa execução. Um cru reusável (em <code class="t-inline">sessoes/news/&lt;slug&gt;.md</code>, fora do hub do blog), com a notícia raspada mais a minha posição em três perguntas-chave (testou? primeira coisa que mudou? veredito?). E um draft de blog pronto (em <code class="t-inline">drafts-v2/news/&lt;slug&gt;.md</code>), que aponta de volta pro cru via campo <code class="t-inline">origem:</code> no frontmatter (o cabeçalho de metadados no topo do arquivo).</p>
+
+      <p class="t-p">Quando eu quiser virar a notícia em carrossel de Instagram amanhã, a skill de IG (que ainda não existe) consome o cru, não o blog. Cada canal reapura.</p>
+
+      <p class="t-p">Outra decisão grande: posts compósitos. Quando rolam três notícias relacionadas no mesmo dia, eu passo as três URLs, a skill gera três crus atômicos (cada um reusável solo pra IG) e um draft de blog que combina os três via <code class="t-inline">origem: [lista]</code>.</p>
+
+      <p class="t-p">O n-stamp (cada atualização cronológica no post de blog) virou heading Markdown <code class="t-inline">## 14:08 título · fonte</code> em vez de array YAML aninhado no frontmatter. Edita melhor no Obsidian (editor de Markdown que uso), lê melhor visualmente.</p>
+
+      <h2 id="s4" class="t-h2">
+        <span class="t-h2-num">iv. smoke híbrido</span>
+        sintético primeiro, real depois
+      </h2>
+
+      <p class="t-p">Antes de testar com URL real, propus dois níveis. Sintético primeiro, pra pegar bug estrutural barato. Real depois, pra pegar voz, UX e bug visual.</p>
+
+      <p class="t-p">Sintético: criei fixtures (drafts e crus falsos com prefixo <code class="t-inline">teste-</code>), rodei a lógica das skills, validei mutações nos arquivos, restaurei tudo via snapshots em <code class="t-inline">/tmp</code> (pasta temporária do sistema). Cleanup garantido. Três tests passaram (parser de n-stamp, normalização de <code class="t-inline">origem:</code> como lista, atualizar-listing-v2 com peça nova).</p>
+
+      <p class="t-p">Real: peguei landing de news da Anthropic, escolhi Opus 4.8 que tinha saído de manhã. Aí o primeiro travamento.</p>
+
+      <p class="t-p">A ferramenta que raspa página (Firecrawl) não tava instalada nesse ambiente. Caí pro WebFetch como alternativa, raspei na unha.</p>
+
+      <p class="t-p">Anthropic não expõe hora exata da publicação no metadata. Marquei <code class="t-inline">hora: ~13:00 BRT (aproximada)</code> com nota. Inventar hora exata era falsidade, melhor admitir aproximação.</p>
+
+      <p class="t-p">Três perguntas-chave: não testei ainda (saiu mesmo dia que vi), a segunda eu pulei (sem teste não tem o que dizer), veredito "preço continua bom mas sem teste real fica leitura". Cru e draft salvos.</p>
+
+      <h2 id="s5" class="t-h2">
+        <span class="t-h2-num">v. render e dois bugs</span>
+        a spec não previu, o real mostrou
+      </h2>
+
+      <p class="t-p">Como o pipeline ainda não tem agente autônomo que execute a skill <code class="t-inline">md-html-v2</code> por mim, gerei o HTML manualmente seguindo o COMPOR (o template de como cada categoria do blog vira HTML). News é grande, uns 210 linhas com ticker, timeline, hero, corpo com dois n-stamps. Setup de estilos primeira vez no caderno: copiei <code class="t-inline">post.css</code>, <code class="t-inline">news.css</code> e fontes (JetBrains Mono) de uma pasta de referência.</p>
+
+      <p class="t-p">Aí veio bug número 1.</p>
+
+      <p class="t-p">Abri o HTML local, hero não apareceu. Path estava com três níveis <code class="t-inline">..</code> (subir diretório), precisava ser cinco. HTML mora em <code class="t-inline">blog/posts/news/</code>, hero mora em <code class="t-inline">ia/sessoes/news/&lt;slug&gt;/</code>. A diferença é cinco diretórios pra cima e dois pra baixo. Eu tinha escrito três na spec sem testar. Corrigi em quatro lugares de uma vez (HTML, draft, skill, spec). Pra próximo uso sair certo de primeira.</p>
+
+      <p class="t-p">Bug número 2 foi mais sério em cara.</p>
+
+      <p class="t-p">Refresh. "Totalmente desconfigurada, sem adequação com a página". Pensei "ferrou, CSS quebrou".</p>
+
+      <p class="t-p">Não era CSS. Era a hero. A imagem original da Anthropic era 2880×1620. Sem class no <code class="t-inline">&lt;img&gt;</code>, ela renderiza tamanho real. Atropela a grade de três colunas do post (TOC à esquerda, conteúdo no meio, timeline à direita). A coluna do meio, que devia ter uns 700 pixels, virou 2880 pixels. Tudo desalinhado.</p>
+
+      <p class="t-p">O CSS tinha regra <code class="t-inline">.t-fig-img { width: 100%; height: auto }</code>. Mas eu não tinha colocado a class no <code class="t-inline">&lt;img&gt;</code>. Fix simples, lição cara.</p>
+
+      <p class="t-p">Anotei a regra em três lugares pra não esquecer:</p>
+
+      <ul class="t-ul">
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Anti-padrão no SKILL.md</strong> da skill que renderiza</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Mapping atualizado no COMPOR de news</strong> (que documenta o que cada campo vira em HTML)</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Memória persistente do agente</strong>, com <strong>Why</strong> e <strong>How to apply</strong> explícitos</li>
+      </ul>
+
+      <p class="t-p">Se rolar de novo em qualquer categoria, o agente vai capturar antes de eu abrir o arquivo.</p>
+
+      <h2 id="s6" class="t-h2">
+        <span class="t-h2-num">vi. deploy</span>
+        três coisas a resolver antes do push
+      </h2>
+
+      <p class="t-p">Comando <code class="t-inline">/deploy-blog</code>. Antes do push, três coisas no <code class="t-inline">git status</code> (a foto do que mudou):</p>
+
+      <ul class="t-ul">
+        <li class="t-li"><span class="t-li-bullet">→</span> Skills v2 untracked (deveriam estar no <code class="t-inline">.gitignore</code>, esqueci de adicionar quando criei). Adicionei.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> Hero path saindo do repo. GitHub Pages serve só uma pasta como raiz. O cru com hero mora fora dessa pasta. Tive que copiar a imagem pra dentro do repo (<code class="t-inline">blog/assets/news/&lt;slug&gt;/hero.jpg</code>) e ajustar path do HTML pra local. Pendente: isso devia rolar automático na skill <code class="t-inline">md-html-v2</code>. Anotei.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> Um post de teste antigo apareceu no status. Confirmei com migo mesmo (era teste), deixei de fora.</li>
+      </ul>
+
+      <p class="t-p">Commit <code class="t-inline">post 004 news · Opus 4.8 sai, preço fica</code>, push. SHA <code class="t-inline">25c1d60</code>. A primeira peça do caderno news no ar em <code class="t-inline">https://gustavoalves-ia.github.io/posts/news/004-claude-opus-4-8.html</code>.</p>
+
+      <p class="t-p">Que cara loko ver listing nascer com <code class="t-inline">boletim · 1 peça</code>.</p>
+
+      <h2 id="s7" class="t-h2">
+        <span class="t-h2-num">vii. o que ficou</span>
+        duas skills, três regras documentadas
+      </h2>
+
+      <p class="t-p">Duas skills v2 entregues e em uso. Uma news real publicada. Dois bugs corrigidos em mais de um lugar (spec, skill, memória) pra não voltar. Uma regra do design system (<code class="t-inline">&lt;img class="t-fig-img"&gt;</code>) virou anti-padrão documentado.</p>
+
+      <p class="t-p">Bug semântico pequeno no <code class="t-inline">md-html-v2</code> ficou na lista. A regra "marca cru como processado só se a lista de derivados era vazia" quebra quando a skill <code class="t-inline">post-news-v2</code> já popula a lista com <code class="t-inline">draft:</code> antes do render. Mudei manual nesta peça. Próxima sessão ajusto a regra pra "marca como processado quando este HTML for o primeiro <code class="t-inline">blog:</code> na lista".</p>
+
+      <p class="t-p">Frente 3 (promover v2 pra default, renomear v1 pra <code class="t-inline">.bak</code>) fica pra quando rodar mais peças.</p>
+
+      <blockquote class="t-quote">
+        Quem quer tem que querer.
+      </blockquote>
+
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">post-mortem</span></div>
+      <div class="t-meta-row"><span>contexto</span><span class="t-meta-strong">blog v2</span></div>
+      <div class="t-meta-row"><span>duração</span><span class="t-meta-strong">~6h</span></div>
+      <div class="t-meta-row"><span>entregue</span><span class="t-meta-cobre">2 skills + 1 news</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>spec não testada vira bug visível</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ blog · skills · pipeline · post-mortem }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 28 mai 2026</div>
+    <div class="t-end-sig">{ próximo: nº 006 · frente 3 → }</div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -3,24 +3,13 @@
 # rascunhos em markdown (fonte privada antes do publish)
 drafts/
 
-# skills internas (markdown-to-blog, etc.) — ferramentas, não conteúdo
-md-html/
-texto-md/
-post-news/
-atualizar-listing/
-
-# v2 paralelo (em teste — vault-only enquanto não promove)
-drafts-v2/
-md-html-v2/
-texto-md-v2/
-atualizar-listing-v2/
-post-news-v2/
+# skills internas (ferramentas, não conteúdo) — agrupadas em skills/
+skills/
 
 # doc interno do hub
 _playbook.md
 
-# brief + bundle do claude design (histórico, não-público)
-md-html/reference/
+# brief + bundle do claude design (histórico, não-público) — reference já coberto por skills/
 **/handoff/
 
 # testes / legacy local (posts antigos que não vão pro ar)

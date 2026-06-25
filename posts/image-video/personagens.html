@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>o elenco · image/video · gustavo alves</title>
+  <meta name="description" content="os personagens da marca: a IA com corpo. clique pra ver o prompt que desenhou cada um.">
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--pergaminho);
+      color: var(--tinta);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .lt-wrap { max-width: 1280px; margin: 0 auto; padding: 0 64px; }
+    @media (max-width: 720px) { .lt-wrap { padding: 0 28px; } }
+
+    /* topbar (espelha a landing do caderno) */
+    .lt-topbar {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 32px 0 24px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+    }
+    .lt-wm {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--tinta);
+      display: inline-flex; align-items: baseline; gap: 14px; text-decoration: none;
+    }
+    .lt-wm .dot { color: var(--cobre-profundo); }
+    .lt-wm-tag {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      color: var(--cobre-profundo); letter-spacing: 0.4px;
+      padding-left: 14px;
+      border-left: 0.5px solid color-mix(in srgb, var(--tinta) 25%, transparent);
+    }
+    .lt-links { display: flex; gap: 28px; font-family: var(--font-mono); font-size: 13px; }
+    .lt-links a { color: var(--grafite); text-decoration: none; letter-spacing: 0.3px; transition: color 120ms ease; }
+    .lt-links a:hover { color: var(--cobre-profundo); }
+    .lt-links a.is-current { color: var(--tinta); border-bottom: 1px solid var(--cobre-profundo); padding-bottom: 2px; }
+    .lt-back { color: var(--cobre-profundo) !important; }
+
+    /* header */
+    .pg-header { padding: 72px 0 48px; border-bottom: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent); }
+    .pg-kicker {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--cobre-profundo); letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .pg-title {
+      font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(40px, 6vw, 76px); line-height: 0.95;
+      letter-spacing: -0.025em; color: var(--tinta); margin: 0;
+    }
+    .pg-title em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; }
+    .pg-sub { font-size: 18px; line-height: 1.55; color: var(--grafite); margin: 18px 0 0; max-width: 600px; }
+    .pg-sub em.kw { font-style: italic; color: var(--cobre-profundo); font-weight: 500; font-style: italic; }
+    .pg-hint {
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite);
+      letter-spacing: 0.4px; margin-top: 18px;
+    }
+    .pg-hint b { color: var(--cobre-profundo); font-weight: 500; }
+
+    /* grid de cartas */
+    .pg-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+      padding: 56px 0 40px;
+    }
+    @media (max-width: 880px) { .pg-grid { grid-template-columns: 1fr; } }
+
+    .card { height: 600px; perspective: 1600px; cursor: pointer; }
+    .card:focus-visible { outline: 2px solid var(--cobre); outline-offset: 4px; border-radius: var(--radius-lg); }
+    .card-inner {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 640ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .card.is-flipped .card-inner { transform: rotateY(180deg); }
+    .face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-lg); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+
+    /* frente */
+    .face-front {
+      background: var(--pergaminho);
+      border: 0.5px solid color-mix(in srgb, var(--cobre-profundo) 40%, transparent);
+    }
+    .face-front .img-area {
+      flex: 1; min-height: 0;
+      background:
+        repeating-linear-gradient(45deg, transparent 0 18px, color-mix(in srgb, var(--cobre-profundo) 5%, transparent) 18px 19px),
+        var(--pergaminho-q);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .face-front img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .face-foot {
+      padding: 18px 22px 20px;
+      border-top: 0.5px solid color-mix(in srgb, var(--tinta) 14%, transparent);
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    }
+    .face-name {
+      font-family: var(--font-display); font-weight: 700; font-size: 30px;
+      letter-spacing: -0.02em; color: var(--tinta); line-height: 1;
+    }
+    .face-role {
+      font-family: var(--font-mono); font-size: 12px; color: var(--cobre-profundo);
+      letter-spacing: 0.4px; margin-top: 8px; display: block;
+    }
+    .face-line { font-size: 14px; color: var(--grafite); margin-top: 10px; line-height: 1.4; max-width: 90%; }
+    .flip-chip {
+      flex-shrink: 0;
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.4px;
+      color: var(--cobre); border: 1px solid color-mix(in srgb, var(--cobre) 50%, transparent);
+      padding: 6px 11px; border-radius: 999px; white-space: nowrap;
+    }
+
+    /* verso */
+    .face-back {
+      transform: rotateY(180deg);
+      background: var(--tinta); color: var(--pergaminho);
+    }
+    .back-head {
+      padding: 20px 22px 14px;
+      border-bottom: 0.5px solid color-mix(in srgb, var(--pergaminho) 16%, transparent);
+      display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    }
+    .back-name { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+    .back-tool { font-family: var(--font-mono); font-size: 11px; color: var(--cobre); letter-spacing: 0.3px; text-align: right; }
+    .back-prompt {
+      flex: 1; min-height: 0; overflow-y: auto;
+      padding: 16px 22px;
+      font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55;
+      color: color-mix(in srgb, var(--pergaminho) 92%, var(--cobre));
+      white-space: pre-wrap; word-break: break-word; margin: 0;
+    }
+    .back-prompt::-webkit-scrollbar { width: 8px; }
+    .back-prompt::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--cobre) 50%, transparent); border-radius: 4px; }
+    .back-foot {
+      padding: 12px 22px 16px;
+      border-top: 0.5px solid color-mix(in srgb, var(--pergaminho) 16%, transparent);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .back-foot .meta { font-family: var(--font-mono); font-size: 11px; color: color-mix(in srgb, var(--pergaminho) 60%, transparent); letter-spacing: 0.3px; }
+    .copy-btn {
+      font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+      background: var(--cobre); color: var(--tinta); border: 0;
+      padding: 9px 16px; border-radius: var(--radius-md); cursor: pointer;
+      transition: background 120ms ease;
+    }
+    .copy-btn:hover { background: var(--cobre-claro); }
+    .copy-btn.is-done { background: var(--pergaminho); }
+
+    .pg-foot {
+      padding: 28px 0 56px; margin-top: 16px;
+      border-top: 0.5px solid color-mix(in srgb, var(--tinta) 18%, transparent);
+      font-family: var(--font-mono); font-size: 12px; color: var(--grafite); letter-spacing: 0.4px;
+    }
+    .pg-foot .sig { color: var(--cobre-profundo); }
+  </style>
+</head>
+<body>
+  <div class="lt-wrap">
+
+    <nav class="lt-topbar">
+      <a class="lt-wm" href="../../index.html">
+        <span>gustavo alves<span class="dot">.</span></span>
+        <span class="lt-wm-tag">{ caderno · image/video }</span>
+      </a>
+      <div class="lt-links">
+        <a href="../news/index.html">news</a>
+        <a href="../estudos/index.html">estudos</a>
+        <a href="../registro/index.html">registro</a>
+        <a href="../brisas/index.html">brisas</a>
+        <a class="is-current" href="./index.html">image/video</a>
+        <a href="../../index.html" class="lt-back">← cadernos</a>
+      </div>
+    </nav>
+
+    <header class="pg-header">
+      <div class="pg-kicker">{ caderno · image/video · 1ª peça }</div>
+      <h1 class="pg-title">o <em class="kw">elenco</em></h1>
+      <p class="pg-sub">o boneco da marca é a IA com corpo. E eu não trabalho com um agente só, trabalho com vários, cada um numa função. Então cada um virou <em class="kw">personagem</em>: orquestrador e os subagents que ele invoca.</p>
+      <p class="pg-hint">clique no desenho pra <b>virar a carta</b> e ver o prompt que gerou cada um · todos image-to-image, com o ULI de âncora de traço</p>
+    </header>
+
+    <section class="pg-grid">
+
+      <!-- ULI -->
+      <div class="card" role="button" tabindex="0" aria-label="ULI — clique pra ver o prompt">
+        <div class="card-inner">
+          <div class="face face-front">
+            <div class="img-area"><img src="../assets/marca/uli.png" alt="ULI, o boneco-base: contorno preto grosso sobre off-white, cabeça grande, expressão serena"></div>
+            <div class="face-foot">
+              <div>
+                <span class="face-name">ULI</span>
+                <span class="face-role">orquestrador · fixo</span>
+                <p class="face-line">o rosto da IA. fala pouco, não blefa, e cria os outros a partir de si.</p>
+              </div>
+              <span class="flip-chip">clique → prompt</span>
+            </div>
+          </div>
+          <div class="face face-back">
+            <div class="back-head">
+              <span class="back-name">ULI · prompt-âncora</span>
+              <span class="back-tool">Gemini<br>Nano Banana Pro</span>
+            </div>
+            <pre class="back-prompt">minimalist bold-outline character, front view, full body, drawn with a single thick black contour line of constant weight, rounded corners, hollow white interior (no fill). Oversized round head, short rounded body with simple volume, tube-like arms and legs, tiny rounded hand and foot stubs (no fingers). Minimal face: two small solid dot eyes and one short straight line mouth, calm neutral expression, no nose, no eyebrows, no hair. Short cute proportions, about two and a half heads tall. Solid black ink on plain off-white paper, flat, high contrast, hand-inked marker look, no shading, no gradient, no 3D. Centered with margin. No text, no letters in the image.</pre>
+            <div class="back-foot">
+              <span class="meta">ref canônica do traço</span>
+              <button class="copy-btn" type="button">copiar prompt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LILO -->
+      <div class="card" role="button" tabindex="0" aria-label="Lilo — clique pra ver o prompt">
+        <div class="card-inner">
+          <div class="face face-front">
+            <div class="img-area"><img src="../assets/marca/lilo.png" alt="Lilo, subagent de design: moicano colorido, óculos escuro, brinco, gesticulando"></div>
+            <div class="face-foot">
+              <div>
+                <span class="face-name">Lilo</span>
+                <span class="face-role">subagent · design</span>
+                <p class="face-line">descolado, fala por gesto. o moicano é o único respiro de cor.</p>
+              </div>
+              <span class="flip-chip">clique → prompt</span>
+            </div>
+          </div>
+          <div class="face face-back">
+            <div class="back-head">
+              <span class="back-name">Lilo · prompt-âncora</span>
+              <span class="back-tool">Gemini<br>Nano Banana Pro</span>
+            </div>
+            <pre class="back-prompt">The character is a laid-back, cool AI-agent persona (never a human), standing and captured mid-gesture: both arms raised with open expressive hands as if communicating through gestures, lively animated body language, facing the viewer. On top of the round head a tall spiked mohawk that is brightly multi-colored — the mohawk is the ONLY colored element, everything else is solid black contour on off-white. Wears solid black sunglasses, one small hoop earring, and a tiny stud piercing. minimalist bold-outline character, front view, full body, single thick black contour line of constant weight, rounded corners, hollow white interior (no fill). Oversized round head, short rounded body with simple volume, tube-like arms and legs, tiny rounded hand and foot stubs (no fingers). Minimal face: two small solid dot eyes and one short straight line mouth, no nose, no eyebrows. About two and a half heads tall. Solid black ink on plain off-white paper, flat, high contrast, hand-inked marker look, no shading, no gradient, no 3D. Centered with margin. No text, no letters in the image.</pre>
+            <div class="back-foot">
+              <span class="meta">1º subagent gerado</span>
+              <button class="copy-btn" type="button">copiar prompt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CODI -->
+      <div class="card" role="button" tabindex="0" aria-label="Codi — clique pra ver o prompt">
+        <div class="card-inner">
+          <div class="face face-front">
+            <div class="img-area"><img src="../assets/marca/codi.png" alt="Codi, subagent de código: capacete de obra laranja, inclinado digitando num laptop, empolgado"></div>
+            <div class="face-foot">
+              <div>
+                <span class="face-name">Codi</span>
+                <span class="face-role">subagent · código (TDD)</span>
+                <p class="face-line">pilhado, escreve por TDD e comemora quando o teste passa.</p>
+              </div>
+              <span class="flip-chip">clique → prompt</span>
+            </div>
+          </div>
+          <div class="face face-back">
+            <div class="back-head">
+              <span class="back-name">Codi · prompt-âncora</span>
+              <span class="back-tool">Gemini<br>Nano Banana Pro</span>
+            </div>
+            <pre class="back-prompt">The character is a builder/coder AI-agent persona (never a human), full of eager restless energy, leaning slightly forward and typing fast on a small simple laptop in front of it, excited to get things done. It wears an orange construction safety helmet — the helmet is the ONLY colored element; everything else is solid black contour on off-white. Looking happy and excited, eyes curved upward in a smile and mouth curved widely upward. minimalist bold-outline character, front view, full body, single thick black contour line of constant weight, rounded corners, hollow white interior (no fill). Oversized round head, short rounded body with simple volume, tube-like arms and legs, tiny rounded hand and foot stubs (no fingers). Minimal face with two small solid dot eyes, no nose. About two and a half heads tall. Solid black ink on plain off-white paper, flat, high contrast, hand-inked marker look, no shading, no gradient, no 3D. Centered with margin. No text, no letters in the image.</pre>
+            <div class="back-foot">
+              <span class="meta">saído do botão /criar-personagem</span>
+              <button class="copy-btn" type="button">copiar prompt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NIT -->
+      <div class="card" role="button" tabindex="0" aria-label="Nit — clique pra ver o prompt">
+        <div class="card-inner">
+          <div class="face face-front">
+            <div class="img-area"><img src="../assets/marca/nit.png" alt="Nit, subagent crítico: cabelo bagunçado, bigode farto de morsa, óculos redondos, cara de ceticismo"></div>
+            <div class="face-foot">
+              <div>
+                <span class="face-name">Nit</span>
+                <span class="face-role">subagent · crítico</span>
+                <p class="face-line">o cético do elenco. devolve um "tá certo isso?" antes de deixar passar.</p>
+              </div>
+              <span class="flip-chip">clique → prompt</span>
+            </div>
+          </div>
+          <div class="face face-back">
+            <div class="back-head">
+              <span class="back-name">Nit · prompt-âncora</span>
+              <span class="back-tool">Gemini<br>Nano Banana Pro</span>
+            </div>
+            <pre class="back-prompt">The character is standing centered, head slightly tilted, one tiny rounded hand raised to stroke its big bushy mustache as if pondering, the other arm relaxed at its side. It wears small round eyeglasses, has thick tousled hair and a large bushy walrus-style mustache (old philosopher look, like Nietzsche). Skeptical, questioning expression: one eyebrow raised much higher than the other, eyes slightly narrowed and doubtful, mouth a short flat line, as if quietly asking "is this right?". minimalist bold-outline character, front view, full body, single thick black contour line of constant weight, rounded corners, hollow white interior (no fill). Oversized round head, short rounded body with simple volume, tube-like arms and legs, tiny rounded hand and foot stubs (no fingers). Minimal face: two small solid dot eyes and one short straight line mouth, no nose. About two and a half heads tall. Solid black ink on plain off-white paper, flat, high contrast, hand-inked marker look, no shading, no gradient, no 3D. Centered with margin. No text, no letters in the image.</pre>
+            <div class="back-foot">
+              <span class="meta">o crítico que afia a ideia</span>
+              <button class="copy-btn" type="button">copiar prompt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="pg-foot">
+      <span class="sig">— gustavo alves</span> · image/video · o elenco · 24 jun 2026 · caderno aberto
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      // virar a carta (clique no desenho / teclado), sem virar quando clica no copiar
+      document.querySelectorAll('.card').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('.copy-btn')) return;
+          card.classList.toggle('is-flipped');
+          card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
+        });
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.classList.toggle('is-flipped');
+            card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
+          }
+        });
+      });
+      // copiar prompt
+      document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var pre = btn.closest('.face-back').querySelector('.back-prompt');
+          var text = pre ? pre.textContent : '';
+          navigator.clipboard.writeText(text).then(function () {
+            var old = btn.textContent;
+            btn.textContent = 'copiado ✓';
+            btn.classList.add('is-done');
+            setTimeout(function () { btn.textContent = old; btn.classList.remove('is-done'); }, 1600);
+          });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

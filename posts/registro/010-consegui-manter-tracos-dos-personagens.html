@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 010 · Finalmente consegui manter o traço dos meus personagens · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <a class="t-wm" href="../../index.html">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </a>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#" style="color: var(--cobre-claro);">registro</a>
+      <a href="../estudos/index.html">estudos</a>
+      <a href="../brisas/index.html">brisas</a>
+      <a href="../image-video/index.html">image/video</a>
+      <a href="../../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">registro</span> / nº 010
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">010</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · registro · 03 jul 2026 }</div>
+      <h1 class="t-title">Finalmente consegui manter o traço dos meus <em class="kw">personagens</em></h1>
+      <p class="t-sub">Como usei o image-to-image e truques de prompt para dominar o visual dos meus subagents sem misturar os atributos</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">03 jul 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">2 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">463</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>negações semânticas</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>mittens e stubs</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>image-to-image</a>
+      <a class="t-toc-item" href="#s4"><span class="t-toc-num">iv.</span>memória viva do vault</a>
+    </aside>
+
+    <article class="t-prose">
+      <p class="t-drop">
+        Toda vez que eu tentava gerar uma imagem com mais de um <em class="kw">personagem</em> meu, a IA misturava tudo. O programador nascia com a barba do crítico, o crítico aparecia de óculos claros, e no final ninguém parecia quem deveria ser. Era o clássico vazamento de atributos na geração de imagem.
+      </p>
+
+      <p class="t-p">
+        Depois de bater a cabeça com vários testes, finalmente consegui acertar o fluxo. E o segredo não estava em um prompt milagroso gigante, mas em saber direcionar os limites de cada figura no papel.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. negações semânticas</span>
+        o truque de falar o que eles não têm
+      </h2>
+
+      <p class="t-p">
+        A primeira parede que bati foi a mistura de rostos. O Nit (o crítico) tem aquele cabelo bagunçado e o bigodão de morsa clássico do Nietzsche. Mas quando eu pedia para ele colaborar com o Codi (o coder) no mesmo prompt, a IA enfiava o bigodão e o cabelo do Nit por baixo do capacete de obra do Codi.
+      </p>
+
+      <p class="t-p">
+        <strong>Pensa.</strong> O modelo de imagem lê tudo junto e acha que todo mundo na cena compartilha das mesmas características físicas.
+      </p>
+
+      <p class="t-p">
+        A sacada foi criar barreiras negativas explícitas no próprio texto. Em vez de só descrever cada um, passei a detalhar o que cada um <strong>não</strong> tem de jeito nenhum:
+      </p>
+
+      <ul class="t-ul">
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Uli:</strong> totalmente careca, sem cabelo, sem óculos, sem bigode.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Lilo:</strong> careca exceto pelo moicano, óculos escuros, sem bigode.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Codi:</strong> totalmente careca, sem bigode, usando só o capacete de obra laranja.</li>
+        <li class="t-li"><span class="t-li-bullet">→</span> <strong>Nit:</strong> o único com cabelo e bigode farto.</li>
+      </ul>
+
+      <p class="t-p">
+        Com essa negação forçada na descrição de cada um, a IA parou de cruzar as linhas e cada boneco manteve sua própria cara.
+      </p>
+
+      <figure class="t-figure">
+        <img src="../../assets/registro/colaboracao-agentes-2d.jpg" alt="Uli, Nit, Lilo e Codi colaborando no front-end em 2D" class="t-fig-img">
+        <figcaption class="t-fig-cap">fig. 01 · Colaboração 2D. Uli, Nit, Lilo e Codi atuando em fluxo descentralizado de front-end.</figcaption>
+      </figure>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. mittens e stubs</span>
+        o bicho de sete cabeças dos dedos
+      </h2>
+
+      <p class="t-p">
+        Outro problema clássico: desenhar dedos. A regra visual dos meus agentes é que Uli, Nit e Codi não têm dedos nas mãos — eles usam stubs arredondados, tipo mitten. O único que tem dedos de forma proposital na sua identidade visual é o Lilo. Mas a IA desrespeitou isso e meteu dedos e unhas humanas realistas nas mãos do Codi só porque ele estava no teclado.
+      </p>
+
+      <p class="t-p">
+        <strong>Aprendi na marra que verbos de ação física acionam o viés humano do modelo de imagem.</strong> Se você diz que ele está "digitando", a IA puxa da memória dela o conceito de "dedos digitando".
+      </p>
+
+      <p class="t-p">
+        A saída foi descrever a pose de forma estática e passiva. O prompt virou: <code class="t-inline">resting simple rounded hand stubs on a laptop</code> (apoiando as mãos stubs no laptop), e as mãos como <code class="t-inline">completely smooth rounded circles with absolutely no fingers, no thumbs</code>. Pronto. Mantivemos o Codi sem dedos e a Lilo com os dela.
+      </p>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. image-to-image</span>
+        construir sobre o que deu certo
+      </h2>
+
+      <p class="t-p">
+        Por fim, a última virada foi parar de tentar gerar a cena do zero a cada pequeno ajuste. Quando consegui uma pose excelente (o Nit e o Uli conversando, e o Codi e a Lilo na máquina), o modelo esqueceu de desenhar as pernas da Lilo no fluxo 2D, deixando-a flutuando cortada.
+      </p>
+
+      <p class="t-p">
+        Em vez de jogar tudo fora e tentar reescrever, usei a imagem anterior diretamente como referência de entrada (<em>Image-to-Image</em>) e pedi apenas o delta da modificação: <em>"This image is a direct modification of the input reference. The only change is that Lilo must be drawn in full body, standing on visible legs."</em>
+      </p>
+
+      <figure class="t-figure">
+        <img src="../../assets/registro/lilo-sem-perna.jpg" alt="Lilo cortada sem pernas no desenho de colaboração" class="t-fig-img">
+        <figcaption class="t-fig-cap">fig. 02 · Incompleto. Lilo cortada sem pernas no primeiro teste do fluxo de colaboração.</figcaption>
+      </figure>
+
+      <h2 id="s4" class="t-h2">
+        <span class="t-h2-num">iv. memória viva do vault</span>
+        a importância de ter documentos e imagens de referência
+      </h2>
+
+      <p class="t-p">
+        Nada disso seria possível se eu não tivesse estruturado a memória da marca antes. Para conseguir usar o <em>Image-to-Image</em> com eficácia, eu precisei de um repositório centralizado de assets de referência e fichas dos personagens.
+      </p>
+
+      <p class="t-p">
+        <strong>Sem ter as imagens canônicas salvas e as fichas de especificação mapeadas, a IA não tem de onde puxar a âncora visual.</strong> Ter os arquivos de base (<code class="t-inline">uli.md</code>, <code class="t-inline">codi.md</code>, <code class="t-inline">nit.md</code> e suas respectivas imagens de traço limpo) no vault é o que garante que qualquer nova geração consiga se manter on-brand, mesmo quando o modelo tenta improvisar.
+      </p>
+
+      <p class="t-p">
+        Não é mágica, é saber cercar o modelo de imagem de todos os lados para ele não improvisar onde não deve. O processo é feio, dá ida e volta, mas no fim, o resultado fica exatamente no traço que a marca pede.
+      </p>
+
+      <blockquote class="t-quote">
+        Quem quer tem que querer.
+      </blockquote>
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">geração visual</span></div>
+      <div class="t-meta-row"><span>modelo</span><span class="t-meta-strong">gemini image</span></div>
+      <div class="t-meta-row"><span>iterações</span><span class="t-meta-strong">6 rodadas</span></div>
+      <div class="t-meta-row"><span>estilo</span><span class="t-meta-cobre">colagem / 2D puro</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>mitigar vazamento exige negação explícita</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ blog · registro · ia · draft }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 03 jul 2026</div>
+    <div class="t-end-sig"></div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nº 011 · Transformei 300 notas soltas num mapa que eu visito · techne</title>
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/post.css">
+</head>
+
+<body class="on-dark">
+
+  <nav class="t-topbar">
+    <a class="t-wm" href="../../index.html">
+      <span>gustavo alves<span class="dot">.</span></span>
+      <span class="t-wm-tag">{ techne · build-log }</span>
+    </a>
+    <div class="t-topbar-links">
+      <a href="../news/index.html">news</a>
+      <a href="#" style="color: var(--cobre-claro);">registro</a>
+      <a href="../estudos/index.html">estudos</a>
+      <a href="../brisas/index.html">brisas</a>
+      <a href="../image-video/index.html">image/video</a>
+      <a href="../../index.html" class="t-back">← cadernos</a>
+    </div>
+  </nav>
+
+  <div class="t-crumb">
+    caderno / <span class="kw-mono">registro</span> / nº 011
+  </div>
+
+  <header class="t-header">
+    <div class="t-header-num-col">
+      <div class="t-header-num">011</div>
+      <div class="t-header-num-label">nº · caderno</div>
+    </div>
+
+    <div>
+      <div class="t-kicker">{ techne · registro · 12 jul 2026 }</div>
+      <h1 class="t-title">Transformei 300 notas soltas num mapa que eu <em class="kw">visito</em></h1>
+      <p class="t-sub">Construí um painel local em 3D pra navegar, conversar e editar direto nas notas do vault, sem sair do mesmo arquivo que já uso no Obsidian</p>
+    </div>
+
+    <div class="t-meta">
+      <div class="t-meta-row"><span>autor</span><span class="t-meta-strong">gustavo alves</span></div>
+      <div class="t-meta-row"><span>publicado</span><span class="t-meta-strong">12 jul 2026</span></div>
+      <div class="t-meta-row"><span>leitura</span><span class="t-meta-strong">3 min</span></div>
+      <div class="t-meta-row"><span>palavras</span><span class="t-meta-strong">551</span></div>
+      <div class="t-meta-row"><span>categoria</span><span class="t-meta-cobre">registro</span></div>
+      <div class="t-state"><span class="t-state-dot"></span> em construção</div>
+    </div>
+  </header>
+
+  <div class="t-body">
+
+    <aside class="t-toc">
+      <div class="t-toc-head">{ índice }</div>
+      <a class="t-toc-item" href="#s1"><span class="t-toc-num">i.</span>grafo 3d</a>
+      <a class="t-toc-item" href="#s2"><span class="t-toc-num">ii.</span>painel</a>
+      <a class="t-toc-item" href="#s3"><span class="t-toc-num">iii.</span>sincronia</a>
+    </aside>
+
+    <article class="t-prose">
+      <p class="t-drop">
+        Tenho 300 notas no vault e não lembrava nem de metade delas. Cansei de abrir pasta atrás de pasta pra achar o que eu mesmo escrevi, e resolvi construir um lugar pra <em class="kw">visitar</em> meu vault, não só ler ele.
+      </p>
+
+      <p class="t-p">
+        Um painel que roda no navegador, na minha própria máquina, sem depender de internet nem de conta em lugar nenhum.
+      </p>
+
+      <h2 id="s1" class="t-h2">
+        <span class="t-h2-num">i. grafo 3d</span>
+        um mapa que eu ando dentro
+      </h2>
+
+      <p class="t-p">
+        A ideia central é simples: cada nota vira um pontinho, cada <code class="t-inline">[[link]]</code> entre notas vira uma linha conectando dois pontos. Só que eu não quis um gráfico chato, plano, tipo organograma de empresa. Quis um negócio que respira, gira sozinho devagar, e some no fundo quando fica longe da câmera, tipo profundidade de verdade.
+      </p>
+
+      <p class="t-p">
+        Isso significa física. Cada nó empurra os outros nós pra não ficar grudado, e cada linha puxa de volta pra não esticar longe demais. Fiz essa física do zero, sem biblioteca pronta, porque a que eu tava usando antes não dava o efeito de câmera que eu queria.
+      </p>
+
+      <p class="t-p">
+        O coração do troço é bem mais simples do que parece:
+      </p>
+
+      <pre class="t-code"><span class="t-code-com">// quanto maior, mais suave o efeito de profundidade</span>
+const FOCAL = 820;
+
+function projetar(no, distanciaDaCamera) {
+  const escala = FOCAL / Math.max(200, FOCAL + distanciaDaCamera);
+  return { x: no.x * escala, y: no.y * escala, escala };
+}</pre>
+
+      <p class="t-p">
+        Não é mágica, é a mesma conta de perspectiva que qualquer jogo usa: quanto mais longe um ponto tá da câmera, mais ele encolhe na tela. <strong>Ponto grande, tá perto. Ponto pequeno e apagado, tá longe.</strong> O resto é decoração em cima disso: cor por pasta, brilho no nó que você tá olhando, rótulo que só aparece se a nota tem peso.
+      </p>
+
+      <p class="t-p">
+        Hoje o mapa tem 300 notas e 86 ligações, e clicar num nó abre a nota ali do lado, na hora, com os vizinhos dela acendendo.
+      </p>
+
+      <h2 id="s2" class="t-h2">
+        <span class="t-h2-num">ii. painel</span>
+        o painel que faz tudo junto
+      </h2>
+
+      <p class="t-p">
+        Não adianta só olhar o mapa, eu queria trabalhar dentro dele. Então o painel tem uma aba deslizante com três modos: chat com o agente, lista de comandos que eu já uso todo dia, e o corpo da nota aberta, editável ali mesmo.
+      </p>
+
+      <p class="t-p">
+        O chat conversa de verdade com a IA, em tempo real, e quando ela precisa escrever ou editar algum arquivo, aparece um pedido de permissão bem na minha cara antes de qualquer coisa mudar. Eu decido, ela executa. Nenhum arquivo muda sem eu apertar o botão.
+      </p>
+
+      <blockquote class="t-quote">
+        Cliquei num nó, abri a nota, editei, salvei. Sem trocar de janela, sem exportar nada, sem esperar sincronizar.
+      </blockquote>
+
+      <h2 id="s3" class="t-h2">
+        <span class="t-h2-num">iii. sincronia</span>
+        não tem sincronização, é o mesmo arquivo
+      </h2>
+
+      <p class="t-p">
+        A parte que mais me surpreendeu não foi o grafo, foi entender uma coisa boba: o painel e o Obsidian não trocam informação entre si. Eles <strong>leem e escrevem o mesmo arquivo, no mesmo disco</strong>. Não existe nuvem, não existe fila, não existe "aguarde sincronizando". Escrevi uma nota pelo painel, abri no Obsidian, tava lá. Editei no Obsidian, o painel já lia o texto novo na próxima vez que eu abria a nota.
+      </p>
+
+      <p class="t-p">
+        A única exceção é o mapa em si, que guarda em cache por dez segundos pra não reler o vault inteiro a cada clique. O conteúdo da nota sempre vem fresco.
+      </p>
+
+      <p class="t-p">
+        <strong>Achei que ia precisar resolver um problema de sincronia e o problema nem existia.</strong> Era só usar a mesma pasta pros dois lados. Isso é o tipo de coisa que só descobre construindo, e não lendo documentação de arquitetura por aí.
+      </p>
+
+      <blockquote class="t-quote">
+        Quem quer tem que querer.
+      </blockquote>
+    </article>
+
+    <aside class="t-notes">
+      <div class="t-notes-head">{ nota de campo }</div>
+      <div class="t-meta-row"><span>tipo</span><span class="t-meta-strong">workspace local</span></div>
+      <div class="t-meta-row"><span>ferramenta</span><span class="t-meta-strong">agent sdk</span></div>
+      <div class="t-meta-row"><span>notas mapeadas</span><span class="t-meta-cobre">300</span></div>
+      <div class="t-meta-row"><span>correções</span><span class="t-meta-strong">4 bugs</span></div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">veredito</div>
+        <div>mesmo arquivo dispensa sincronização</div>
+      </div>
+
+      <div class="t-note-block">
+        <div class="t-note-head">tags</div>
+        <div>{ blog · registro · ia · draft }</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="t-end">
+    <div>— fim · gustavo alves · 12 jul 2026</div>
+    <div class="t-end-sig"></div>
+  </div>
+
+  <div class="t-nl">
+    <p class="t-nl-text">
+      receba o próximo registro <em class="kw">antes</em> de virar conteúdo.
+    </p>
+    <form class="t-nl-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="seu@email.com" class="t-nl-input">
+      <button class="t-nl-btn">assinar →</button>
+    </form>
+  </div>
+
+</body>
+</html>

@@ -6,6 +6,16 @@
   <title>nº 011 · Transformei 300 notas soltas num mapa que eu visito · techne</title>
   <link rel="stylesheet" href="./styles/tokens.css">
   <link rel="stylesheet" href="./styles/post.css">
+  <style>
+    .t-graph-demo {
+      background: var(--tinta);
+      border: 0.5px solid color-mix(in srgb, var(--pergaminho) 15%, transparent);
+      border-radius: 8px;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .t-graph-demo canvas { display: block; width: 100%; height: auto; }
+  </style>
 </head>
 
 <body class="on-dark">
@@ -98,6 +108,13 @@ function projetar(no, distanciaDaCamera) {
         Não é mágica, é a mesma conta de perspectiva que qualquer jogo usa: quanto mais longe um ponto tá da câmera, mais ele encolhe na tela. <strong>Ponto grande, tá perto. Ponto pequeno e apagado, tá longe.</strong> O resto é decoração em cima disso: cor por pasta, brilho no nó que você tá olhando, rótulo que só aparece se a nota tem peso.
       </p>
 
+      <figure class="t-figure">
+        <div class="t-graph-demo">
+          <canvas id="grafo-demo" width="800" height="300"></canvas>
+        </div>
+        <figcaption class="t-fig-cap">fig. 01 · o mesmo motor rodando ao vivo aqui na página, versão de bolso, sem as 300 notas.</figcaption>
+      </figure>
+
       <p class="t-p">
         Hoje o mapa tem 300 notas e 86 ligações, e clicar num nó abre a nota ali do lado, na hora, com os vizinhos dela acendendo.
       </p>
@@ -175,6 +192,110 @@ function projetar(no, distanciaDaCamera) {
       <button class="t-nl-btn">assinar →</button>
     </form>
   </div>
+
+  <script>
+  (function () {
+    var canvas = document.getElementById('grafo-demo');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    var FOCAL = 420;
+    var W = canvas.width, H = canvas.height;
+    var N = 16;
+
+    var nodes = [];
+    for (var i = 0; i < N; i++) {
+      nodes.push({
+        x: (Math.random() - 0.5) * 220,
+        y: (Math.random() - 0.5) * 140,
+        z: (Math.random() - 0.5) * 220,
+        vx: 0, vy: 0, vz: 0,
+        r: 3 + Math.random() * 4
+      });
+    }
+    var edges = [];
+    for (var i = 1; i < N; i++) edges.push([i, Math.floor(Math.random() * i)]);
+    for (var i = 0; i < 5; i++) {
+      var a = Math.floor(Math.random() * N), b = Math.floor(Math.random() * N);
+      if (a !== b) edges.push([a, b]);
+    }
+
+    var yaw = 0;
+
+    function fisica() {
+      for (var i = 0; i < N; i++) {
+        for (var j = i + 1; j < N; j++) {
+          var p = nodes[i], q = nodes[j];
+          var dx = p.x - q.x, dy = p.y - q.y, dz = p.z - q.z;
+          var d2 = dx * dx + dy * dy + dz * dz || 1;
+          var f = 1500 / d2;
+          var d = Math.sqrt(d2);
+          dx /= d; dy /= d; dz /= d;
+          p.vx += dx * f; p.vy += dy * f; p.vz += dz * f;
+          q.vx -= dx * f; q.vy -= dy * f; q.vz -= dz * f;
+        }
+      }
+      edges.forEach(function (e) {
+        var p = nodes[e[0]], q = nodes[e[1]];
+        var dx = q.x - p.x, dy = q.y - p.y, dz = q.z - p.z;
+        var d = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
+        var f = 0.02 * (d - 100);
+        var ux = dx / d, uy = dy / d, uz = dz / d;
+        p.vx += ux * f; p.vy += uy * f; p.vz += uz * f;
+        q.vx -= ux * f; q.vy -= uy * f; q.vz -= uz * f;
+      });
+      nodes.forEach(function (n) {
+        n.vx += -n.x * 0.004; n.vy += -n.y * 0.004; n.vz += -n.z * 0.004;
+        n.vx *= 0.82; n.vy *= 0.82; n.vz *= 0.82;
+        n.x += n.vx; n.y += n.vy; n.z += n.vz;
+      });
+    }
+
+    function desenhar() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#12100C';
+      ctx.fillRect(0, 0, W, H);
+
+      var cy = Math.cos(yaw), sy = Math.sin(yaw);
+      var proj = nodes.map(function (n) {
+        var X = n.x * cy + n.z * sy;
+        var Z = -n.x * sy + n.z * cy;
+        var pr = FOCAL / Math.max(140, FOCAL + Z);
+        return { sx: X * pr + W / 2, sy: n.y * pr + H / 2, pr: pr, depth: Z };
+      });
+
+      ctx.strokeStyle = 'rgba(216,138,74,0.25)';
+      ctx.lineWidth = 0.8;
+      edges.forEach(function (e) {
+        var a = proj[e[0]], b = proj[e[1]];
+        ctx.beginPath();
+        ctx.moveTo(a.sx, a.sy);
+        ctx.lineTo(b.sx, b.sy);
+        ctx.stroke();
+      });
+
+      var ordem = proj.map(function (p, i) { return { p: p, r: nodes[i].r }; })
+        .sort(function (a, b) { return b.p.depth - a.p.depth; });
+
+      ordem.forEach(function (o) {
+        var rr = Math.max(1.4, o.r * o.p.pr);
+        ctx.beginPath();
+        ctx.arc(o.p.sx, o.p.sy, rr, 0, Math.PI * 2);
+        ctx.fillStyle = '#D88A4A';
+        ctx.globalAlpha = 0.45 + 0.55 * Math.min(1, o.p.pr);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    function loop() {
+      fisica();
+      yaw += 0.0035;
+      desenhar();
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+  </script>
 
 </body>
 </html>

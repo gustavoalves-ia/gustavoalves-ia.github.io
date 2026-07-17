@@ -445,7 +445,7 @@ code.t-inline {
 /* code block */
 pre.t-code {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.55;
   background: var(--pergaminho-q);
   color: var(--tinta);

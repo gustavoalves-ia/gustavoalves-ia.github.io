@@ -277,7 +277,7 @@ body.on-dark {
   border-radius: 8px;
   padding: 20px 24px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   color: color-mix(in srgb, var(--pergaminho) 80%, transparent);
   white-space: pre;
@@ -550,7 +550,7 @@ body.on-dark {
   .t-figure { margin: 32px 0; }
   .t-fig-placeholder { height: 220px; font-size: 11px; padding: 0 16px; }
 
-  .t-code { padding: 16px 18px; font-size: 12px; }
+  .t-code { padding: 16px 18px; font-size: 13px; }
   .t-inline { font-size: 13px; }
 
   .t-end { padding: 28px 20px 0; }

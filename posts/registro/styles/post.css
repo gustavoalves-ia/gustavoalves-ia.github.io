@@ -182,6 +182,8 @@ body.on-dark {
 }
 
 /* índice esquerda */
+.t-toc, .t-prose, .t-notes { min-width: 0; }
+
 .t-toc {
   position: sticky;
   top: 32px;
